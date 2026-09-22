@@ -1,0 +1,59 @@
+{
+  "common": {
+    "footer": "Подвал",
+    "home": "Главная"
+  },
+  "header": {
+    "city": "Город",
+    "cities": {
+      "moscow": "Москва",
+      "spb": "Санкт-Петербург",
+      "kazan": "Казань"
+    },
+    "phone": "+7 (900) 000-00-00"
+  },
+  "nav": {
+    "catalog": "Весь каталог",
+    "sales": "Акции",
+    "warranty": "Гарантия",
+    "returnPolicy": "Политика возврата",
+    "credit": "Кредит",
+    "deliveryPayment": "Доставка и оплата",
+    "reviews": "Отзывы",
+    "contacts": "Контакты"
+  },
+  "pages": {
+    "home": {
+      "title": "Главная страница",
+      "subtitle": "Добро пожаловать в наш магазин iPhone"
+    },
+    "notFound": {
+      "title": "Не найдено",
+      "message": "Страница не найдена"
+    },
+    "catalog": {
+      "title": "Весь каталог"
+    },
+    "sales": {
+      "title": "Акции"
+    },
+    "warranty": {
+      "title": "Гарантия"
+    },
+    "returnPolicy": {
+      "title": "Политика возврата"
+    },
+    "credit": {
+      "title": "Кредит"
+    },
+    "deliveryPayment": {
+      "title": "Доставка и оплата"
+    },
+    "reviews": {
+      "title": "Отзывы"
+    },
+    "contacts": {
+      "title": "Контакты"
+    }
+  }
+}

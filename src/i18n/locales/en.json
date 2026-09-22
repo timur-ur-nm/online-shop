@@ -1,0 +1,59 @@
+{
+  "common": {
+    "footer": "Footer",
+    "home": "Home"
+  },
+  "header": {
+    "city": "City",
+    "cities": {
+      "moscow": "Moscow",
+      "spb": "St. Petersburg",
+      "kazan": "Kazan"
+    },
+    "phone": "+7 (900) 000-00-00"
+  },
+  "nav": {
+    "catalog": "All catalog",
+    "sales": "Sales",
+    "warranty": "Warranty",
+    "returnPolicy": "Return policy",
+    "credit": "Credit",
+    "deliveryPayment": "Delivery & payment",
+    "reviews": "Reviews",
+    "contacts": "Contacts"
+  },
+  "pages": {
+    "home": {
+      "title": "Home page",
+      "subtitle": "Welcome to our iPhone store"
+    },
+    "notFound": {
+      "title": "Not found",
+      "message": "Page not found"
+    },
+    "catalog": {
+      "title": "All catalog"
+    },
+    "sales": {
+      "title": "Sales"
+    },
+    "warranty": {
+      "title": "Warranty"
+    },
+    "returnPolicy": {
+      "title": "Return policy"
+    },
+    "credit": {
+      "title": "Credit"
+    },
+    "deliveryPayment": {
+      "title": "Delivery & payment"
+    },
+    "reviews": {
+      "title": "Reviews"
+    },
+    "contacts": {
+      "title": "Contacts"
+    }
+  }
+}
