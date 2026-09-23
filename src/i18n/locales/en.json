@@ -10,7 +10,35 @@
       "spb": "St. Petersburg",
       "kazan": "Kazan"
     },
-    "phone": "+7 (900) 000-00-00"
+    "phone": "+7 (900) 000-00-00",
+    "catalogTitle": "Product catalog",
+    "searchPlaceholder": "Search...",
+    "wishlist": "Favorites",
+    "cart": "Cart"
+  },
+  "categories": {
+    "smartphones": "Smartphones",
+    "tablets": "Tablets",
+    "computers": "Computers",
+    "watches": "Watches",
+    "accessories": "Accessories",
+    "sales": "Sales"
+  },
+  "products": {
+    "iphone": "iPhone",
+    "macbook": "MacBook",
+    "ipad": "iPad",
+    "appleWatch": "Apple Watch",
+    "airpods": "AirPods",
+    "accessories": "Accessories",
+    "items": {
+      "iphone": ["iPhone 16 Pro", "iPhone 16", "iPhone 15", "iPhone SE"],
+      "macbook": ["MacBook Pro 14", "MacBook Pro 16", "MacBook Air"],
+      "ipad": ["iPad Pro", "iPad Air", "iPad mini"],
+      "appleWatch": ["Apple Watch Ultra 2", "Apple Watch Series 10", "Apple Watch SE"],
+      "airpods": ["AirPods Pro 2", "AirPods 4", "AirPods Max"],
+      "accessories": ["Cases", "Screen protectors", "Chargers"]
+    }
   },
   "nav": {
     "catalog": "All catalog",

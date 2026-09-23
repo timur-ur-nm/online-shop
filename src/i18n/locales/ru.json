@@ -10,7 +10,35 @@
       "spb": "Санкт-Петербург",
       "kazan": "Казань"
     },
-    "phone": "+7 (900) 000-00-00"
+    "phone": "+7 (900) 000-00-00",
+    "catalogTitle": "Каталог товаров",
+    "searchPlaceholder": "Поиск...",
+    "wishlist": "Избранное",
+    "cart": "Корзина"
+  },
+  "categories": {
+    "smartphones": "Смартфоны",
+    "tablets": "Планшеты",
+    "computers": "Компьютеры",
+    "watches": "Часы",
+    "accessories": "Аксессуары",
+    "sales": "Акции"
+  },
+  "products": {
+    "iphone": "iPhone",
+    "macbook": "MacBook",
+    "ipad": "iPad",
+    "appleWatch": "Apple Watch",
+    "airpods": "AirPods",
+    "accessories": "Аксессуары",
+    "items": {
+      "iphone": ["iPhone 16 Pro", "iPhone 16", "iPhone 15", "iPhone SE"],
+      "macbook": ["MacBook Pro 14", "MacBook Pro 16", "MacBook Air"],
+      "ipad": ["iPad Pro", "iPad Air", "iPad mini"],
+      "appleWatch": ["Apple Watch Ultra 2", "Apple Watch Series 10", "Apple Watch SE"],
+      "airpods": ["AirPods Pro 2", "AirPods 4", "AirPods Max"],
+      "accessories": ["Чехлы", "Защитные стёкла", "Зарядные устройства"]
+    }
   },
   "nav": {
     "catalog": "Весь каталог",
