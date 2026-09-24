@@ -1,9 +1,9 @@
 import { useTranslation } from "react-i18next";
-import iphoneIcon from "../../assets/iphonex_119956 5.png";
-import macbookIcon from "../../assets/macbook_laptop_mac_apple_computer_icon_134097 3.png";
-import ipadIcon from "../../assets/ipadh_119979 3.png";
-import appleWatchIcon from "../../assets/applewatch_119991 3.png";
-import airpodsIcon from "../../assets/airpods_110489 3.png";
+import iphoneIcon from "../../assets/products/iphone.png";
+import macbookIcon from "../../assets/products/macbook.png";
+import ipadIcon from "../../assets/products/ipad.png";
+import appleWatchIcon from "../../assets/products/apple-watch.png";
+import airpodsIcon from "../../assets/products/airpods.png";
 
 const products = [
   { key: "iphone", icon: iphoneIcon },

@@ -1,7 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
-import burgerdots from '../../assets/burgerdots.png'
+import burgerdots from '../../assets/icons/burger.png'
 const dropdownItems = [
   { to: "catalog?category=smartphones", label: "categories.smartphones" },
   { to: "catalog?category=tablets", label: "categories.tablets" },
@@ -63,7 +63,7 @@ export default function SearchBar() {
           )}
         </div>
 
-        <div className="relative flex-1">
+        <div className="relative min-w-0 flex-1">
           <svg
             viewBox="0 0 24 24"
             fill="none"

@@ -20,7 +20,7 @@ export default function InfoBar() {
     <div className="border-t border-gray-100 bg-white">
       <div className="container mx-auto flex items-center justify-between gap-8 px-4 py-3">
         <img src={logo} alt="logo" className="h-10" />
-        <nav className="flex items-center gap-6">
+        <nav className="flex min-w-0 items-center gap-6">
           {navItems.map(({ to, label }) => (
             <NavLink
               key={label}

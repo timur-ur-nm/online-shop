@@ -1,7 +1,7 @@
 import CitySelect from "../common/CitySelect";
-import vkIcon from "../../assets/vk-icon.png";
-import telegramIcon from "../../assets/telegram-icon.png";
-import watsappIcon from "../../assets/watsapp-icon.png";
+import vkIcon from "../../assets/icons/vk.png";
+import telegramIcon from "../../assets/icons/telegram.png";
+import watsappIcon from "../../assets/icons/whatsapp.png";
 
 const socials = [
   { name: "VK", href: "https://vk.com", icon: vkIcon },
