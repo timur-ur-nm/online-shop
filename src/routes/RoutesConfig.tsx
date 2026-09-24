@@ -8,6 +8,7 @@ import Credit from "../pages/Credit";
 import DeliveryPayment from "../pages/DeliveryPayment";
 import Reviews from "../pages/Reviews";
 import Contacts from "../pages/Contacts";
+import Privacy from "../pages/Privacy";
 import NotFound404 from "../pages/NotFound";
 import LangLayout from "../layout/LangLayout";
 
@@ -26,6 +27,7 @@ export const router = createHashRouter([
       { path: "delivery-payment", element: <DeliveryPayment /> },
       { path: "reviews", element: <Reviews /> },
       { path: "contacts", element: <Contacts /> },
+      { path: "privacy-policy", element: <Privacy /> },
       { path: "*", element: <NotFound404 /> },
     ],
   },

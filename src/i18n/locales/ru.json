@@ -48,7 +48,8 @@
     "credit": "Кредит",
     "deliveryPayment": "Доставка и оплата",
     "reviews": "Отзывы",
-    "contacts": "Контакты"
+    "contacts": "Контакты",
+    "privacy": "Политика конфиденциальности"
   },
   "pages": {
     "home": {
@@ -82,6 +83,26 @@
     },
     "contacts": {
       "title": "Контакты"
+    },
+    "privacy": {
+      "title": "Политика конфиденциальности"
+    },
+    "products": {
+      "iphone": "iPhone",
+      "ipad": "iPad",
+      "macbook": "MacBook и iMac",
+      "watch": "Apple Watch",
+      "accessories": "Аксессуары"
     }
+  },
+  "footer": {
+    "tagline": "Продажа iPhone в МСК",
+    "copyright": "© 2013-2026",
+    "disclaimer": "*Сайт не является публичной офертой. Вся информация, указанная на сайте, носит информационный характер.",
+    "phone": "+7 812 704 86 97",
+    "consultation": "Бесплатная консультация",
+    "hours": "С 10:00 до 21:00, без выходных",
+    "callback": "Заказать звонок",
+    "address": "Москва, ул. Барклая, 8"
   }
 }

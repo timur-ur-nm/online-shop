@@ -48,7 +48,8 @@
     "credit": "Credit",
     "deliveryPayment": "Delivery & payment",
     "reviews": "Reviews",
-    "contacts": "Contacts"
+    "contacts": "Contacts",
+    "privacy": "Privacy policy"
   },
   "pages": {
     "home": {
@@ -82,6 +83,26 @@
     },
     "contacts": {
       "title": "Contacts"
+    },
+    "privacy": {
+      "title": "Privacy policy"
+    },
+    "products": {
+      "iphone": "iPhone",
+      "ipad": "iPad",
+      "macbook": "MacBook и iMac",
+      "watch": "Apple Watch",
+      "accessories": "Accessories"
     }
+  },
+  "footer": {
+    "tagline": "iPhone store in Moscow",
+    "copyright": "© 2013-2026",
+    "disclaimer": "*This website is not a public offer. All information provided is for informational purposes only.",
+    "phone": "+7 812 704 86 97",
+    "consultation": "Free consultation",
+    "hours": "From 10:00 to 21:00, 7 days a week",
+    "callback": "Request a call",
+    "address": "Moscow, Barklaya st., 8"
   }
 }
