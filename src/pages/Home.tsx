@@ -1,16 +1,19 @@
 
 
-import { useTranslation } from "react-i18next";
 import HeroSection from "./Home/HeroSection";
+import PopularProducts from "./Home/PopularProducts";
+import PromoBanner from "./Home/PromoBanner";
+import NewArrivals from "./Home/NewArrivals";
+import Benefits from "./Home/Benefits";
 
 export default function Home() {
-  const { t } = useTranslation();
-
   return (
     <div>
       <HeroSection />
-      <h1>{t("pages.home.title")}</h1>
-      <p>{t("pages.home.subtitle")}</p>
+      <PopularProducts />
+      <PromoBanner />
+      <NewArrivals />
+      <Benefits />
     </div>
   );
 }

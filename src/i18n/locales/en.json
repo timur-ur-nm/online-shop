@@ -56,6 +56,45 @@
       "title": "Home page",
       "subtitle": "Welcome to our iPhone store"
     },
+    "homePopular": {
+      "title": "Popular products"
+    },
+    "homeNovelties": {
+      "title": "New arrivals"
+    },
+    "homeBenefits": {
+      "title": "Our advantages",
+      "warranty": {
+        "title": "Official warranty",
+        "text": "All devices with 1 year warranty"
+      },
+      "delivery": {
+        "title": "Fast delivery",
+        "text": "Deliver in Moscow within 1 day"
+      },
+      "original": {
+        "title": "Fully original",
+        "text": "Verified Apple devices"
+      },
+      "installment": {
+        "title": "Installments and credit",
+        "text": "Pay in parts without overpaying"
+      }
+    },
+    "homeBanner": {
+      "title": "iPhone 14 Pro Max",
+      "subtitle": "at the best price in Moscow",
+      "details": "Details"
+    },
+    "productCard": {
+      "ratings": "ratings",
+      "inStock": "In stock",
+      "outOfStock": "Out of stock",
+      "addToCart": "Add to cart",
+      "inCart": "In cart",
+      "wantCheaper": "Want it cheaper",
+      "buyOneClick": "Buy in one click"
+    },
     "notFound": {
       "title": "Not found",
       "message": "Page not found"

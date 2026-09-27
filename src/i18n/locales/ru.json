@@ -56,6 +56,45 @@
       "title": "Главная страница",
       "subtitle": "Добро пожаловать в наш магазин iPhone"
     },
+    "homePopular": {
+      "title": "Популярные товары"
+    },
+    "homeNovelties": {
+      "title": "Новинки"
+    },
+    "homeBenefits": {
+      "title": "Наши преимущества",
+      "warranty": {
+        "title": "Официальная гарантия",
+        "text": "Все устройства с гарантией 1 год"
+      },
+      "delivery": {
+        "title": "Быстрая доставка",
+        "text": "Доставим по Москве за 1 день"
+      },
+      "original": {
+        "title": "Только оригинал",
+        "text": "Проверенные устройства Apple"
+      },
+      "installment": {
+        "title": "Рассрочка и кредит",
+        "text": "Плати частями без переплат"
+      }
+    },
+    "homeBanner": {
+      "title": "iPhone 14 Pro Max",
+      "subtitle": "по лучшей цене в Москве",
+      "details": "Подробнее"
+    },
+    "productCard": {
+      "ratings": "оценок",
+      "inStock": "В наличии",
+      "outOfStock": "Нет в наличии",
+      "addToCart": "В корзину",
+      "inCart": "В корзине",
+      "wantCheaper": "Хочу дешевле",
+      "buyOneClick": "Купить в один клик"
+    },
     "notFound": {
       "title": "Не найдено",
       "message": "Страница не найдена"
