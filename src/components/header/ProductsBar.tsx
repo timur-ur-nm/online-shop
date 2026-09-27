@@ -1,18 +1,5 @@
 import { useTranslation } from "react-i18next";
-import iphoneIcon from "../../assets/products/iphone.png";
-import macbookIcon from "../../assets/products/macbook.png";
-import ipadIcon from "../../assets/products/ipad.png";
-import appleWatchIcon from "../../assets/products/apple-watch.png";
-import airpodsIcon from "../../assets/products/airpods.png";
-
-const products = [
-  { key: "iphone", icon: iphoneIcon },
-  { key: "macbook", icon: macbookIcon },
-  { key: "ipad", icon: ipadIcon },
-  { key: "appleWatch", icon: appleWatchIcon },
-  { key: "airpods", icon: airpodsIcon },
-  { key: "accessories", icon: iphoneIcon },
-] as const;
+import { categories } from "../../data/db";
 
 export default function ProductsBar() {
   const { t } = useTranslation();
@@ -20,26 +7,18 @@ export default function ProductsBar() {
   return (
     <div className="hidden border-t border-gray-100 bg-white md:block">
       <div className="container mx-auto px-4">
-        <nav className="flex items-center justify-between gap-4 overflow-x-auto py-2 lg:overflow-visible">
-          {products.map(({ key, icon }) => (
+        <nav className="flex items-center justify-between gap-4 py-2">
+          {categories.map(({ key, label, icon }) => (
             <div key={key} className="group relative shrink-0">
               <button
                 type="button"
                 className="relative flex items-center gap-2 px-3 pb-2 text-[16px] font-medium text-gray-700 transition-colors after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:origin-left after:scale-x-0 after:bg-[#0071E4] after:transition-transform after:duration-300 after:content-[''] group-hover:text-[#0071E4] group-hover:after:scale-x-100 lg:text-[18px]"
               >
-                {typeof icon === "string" ? (
-                  <img
-                    src={icon}
-                    alt={t(`products.${key}`)}
-                    className="h-6 w-6 object-contain"
-                  />
-                ) : (
-                  <span className="text-[#0071E4]">{icon}</span>
-                )}
-                {t(`products.${key}`)}
+                <img src={icon} alt={t(label)} className="h-6 w-6 object-contain" />
+                {t(label)}
               </button>
 
-              <div className="pointer-events-none absolute left-1/2 top-full z-50 w-72 -translate-x-1/2 rounded-b border border-gray-100 bg-white p-3 opacity-0 shadow-lg transition-opacity duration-200 group-hover:pointer-events-auto group-hover:opacity-100">
+              <div className="pointer-events-none absolute left-1/2 top-full z-50 w-80 max-h-[320px] -translate-x-1/2 overflow-y-auto rounded-b border border-gray-100 bg-white p-3 opacity-0 shadow-lg scrollbar-thin transition-opacity duration-200 group-hover:pointer-events-auto group-hover:opacity-100">
                 {(
                   t(`products.items.${key}`, {
                     returnObjects: true,

@@ -1,15 +1,8 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
+import type { Product } from "../../data/db";
 
-export interface Product {
-  id: string;
-  name: string;
-  price: number;
-  oldPrice?: number;
-  ratingCount?: number;
-  inStock?: boolean;
-  image?: string;
-}
+export type { Product };
 
 interface ProductCardProps {
   product: Product;

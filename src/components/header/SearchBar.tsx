@@ -2,13 +2,7 @@ import { useTranslation } from "react-i18next";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import burgerdots from '../../assets/icons/burger.png'
-const dropdownItems = [
-  { to: "catalog?category=smartphones", label: "categories.smartphones" },
-  { to: "catalog?category=tablets", label: "categories.tablets" },
-  { to: "catalog?category=computers", label: "categories.computers" },
-  { to: "catalog?category=watches", label: "categories.watches" },
-  { to: "catalog?category=accessories", label: "categories.accessories" },
-];
+import { catalogCategories } from "../../data/db";
 
 export default function SearchBar() {
   const { t } = useTranslation();
@@ -49,7 +43,7 @@ export default function SearchBar() {
               <p className="px-4 py-2.5 text-xs font-semibold uppercase tracking-wide text-gray-400">
                 {t("header.catalogTitle")}
               </p>
-              {dropdownItems.map(({ to, label }) => (
+              {catalogCategories.map(({ to, label }) => (
                 <Link
                   key={label}
                   to={to}

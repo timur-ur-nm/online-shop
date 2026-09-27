@@ -1,33 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { Link } from "react-router-dom";
 import logo from "../assets/logo.png";
-import telegram from "../assets/icons/telegram.png";
-import vk from "../assets/icons/vk.png";
-import whatsapp from "../assets/icons/whatsapp.png";
-
-const infoLinks = [
-  { to: "warranty", label: "nav.warranty" },
-  { to: "return-policy", label: "nav.returnPolicy" },
-  { to: "credit", label: "nav.credit" },
-  { to: "delivery-payment", label: "nav.deliveryPayment" },
-  { to: "reviews", label: "nav.reviews" },
-  { to: "contacts", label: "nav.contacts" },
-  { to: "privacy-policy", label: "nav.privacy" },
-];
-
-const productLinks = [
-  { to: "catalog?category=iphone", label: "pages.products.iphone" },
-  { to: "catalog?category=ipad", label: "pages.products.ipad" },
-  { to: "catalog?category=macbook", label: "pages.products.macbook" },
-  { to: "catalog?category=watch", label: "pages.products.watch" },
-  { to: "catalog?category=accessories", label: "pages.products.accessories" },
-];
-
-const socials = [
-  { name: "Telegram", href: "https://t.me", icon: telegram },
-  { name: "VK", href: "https://vk.com", icon: vk },
-  { name: "WhatsApp", href: "https://wa.me", icon: whatsapp },
-];
+import { footerInfoLinks, footerProductLinks, socials } from "../data/db";
 
 export default function Footer() {
   const { t } = useTranslation();
@@ -44,7 +18,7 @@ export default function Footer() {
 
         <div>
           <ul className="space-y-3">
-            {infoLinks.map(({ to, label }) => (
+            {footerInfoLinks.map(({ to, label }) => (
               <li key={to}>
                 <Link
                   to={to}
@@ -59,7 +33,7 @@ export default function Footer() {
 
         <div>
           <ul className="space-y-3">
-            {productLinks.map(({ to, label }) => (
+            {footerProductLinks.map(({ to, label }) => (
               <li key={label}>
                 <Link
                   to={to}

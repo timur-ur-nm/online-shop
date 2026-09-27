@@ -3,25 +3,7 @@ import { useState } from "react";
 import { Link, NavLink, useParams } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import LanguageSwitcher from "../common/LanguageSwitcher";
-
-const navItems = [
-  { to: "catalog", label: "nav.catalog" },
-  { to: "sales", label: "nav.sales" },
-  { to: "warranty", label: "nav.warranty" },
-  { to: "return-policy", label: "nav.returnPolicy" },
-  { to: "credit", label: "nav.credit" },
-  { to: "delivery-payment", label: "nav.deliveryPayment" },
-  { to: "reviews", label: "nav.reviews" },
-  { to: "contacts", label: "nav.contacts" },
-];
-
-const categoryItems = [
-  { to: "catalog?category=smartphones", label: "categories.smartphones" },
-  { to: "catalog?category=tablets", label: "categories.tablets" },
-  { to: "catalog?category=computers", label: "categories.computers" },
-  { to: "catalog?category=watches", label: "categories.watches" },
-  { to: "catalog?category=accessories", label: "categories.accessories" },
-];
+import { navItems, catalogCategories } from "../../data/db";
 
 export default function InfoBar() {
   const { t } = useTranslation();
@@ -104,7 +86,7 @@ export default function InfoBar() {
               {t("header.catalogTitle")}
             </p>
             <div className="mb-1 grid grid-cols-1">
-              {categoryItems.map(({ to, label }) => (
+              {catalogCategories.map(({ to, label }) => (
                 <NavLink
                   key={label}
                   to={to}

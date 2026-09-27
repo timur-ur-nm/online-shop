@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import heroImage from "../../assets/orig (66) 1.png";
-import heroBackground from "../../assets/promo (2).png";
+import { heroSlides } from "../../data/db";
 
-const SLIDES = 3;
+const SLIDES = heroSlides.length;
 
 export default function HeroSection() {
   const { t } = useTranslation();
@@ -24,18 +23,18 @@ export default function HeroSection() {
         className="flex h-full transition-transform duration-500 ease-out"
         style={{ transform: `translateX(-${current * 100}%)` }}
       >
-        {Array.from({ length: SLIDES }).map((_, i) => (
+        {heroSlides.map((slide, i) => (
           <div
             key={i}
             className="relative h-full w-full shrink-0 overflow-hidden"
           >
             <img
-              src={heroBackground}
+              src={slide.background}
               alt=""
               className="absolute inset-0 h-full w-full object-cover"
             />
-            <div className="container relative flex h-full flex-col items-center justify-between px-4 pt-4 md:flex-row md:items-center md:justify-center md:py-0">
-              <div className="flex flex-col items-center text-right text-black md:items-start">
+            <div className="container relative mx-auto flex h-full flex-col items-center justify-between px-4 pt-4 md:flex-row md:items-center md:justify-center md:py-0">
+              <div className="flex max-h-[70%] flex-col items-center justify-center text-right text-black sm:max-h-[50%] md:max-h-[80%] md:items-start lg:max-h-[100%]">
                 <h2 className="text-3xl font-bold md:text-6xl">
                   {t("pages.hero.title")}
                 </h2>
@@ -44,9 +43,9 @@ export default function HeroSection() {
                 </p>
               </div>
               <img
-                src={heroImage}
+                src={slide.phoneImage}
                 alt={t("pages.hero.title")}
-                className="max-h-[70%] w-auto self-center object-contain md:max-h-none md:self-end"
+                className="max-h-[70%] w-auto object-contain sm:max-h-[50%] md:max-h-[80%] md:self-end lg:max-h-[100%]"
               />
             </div>
           </div>
