@@ -81,6 +81,13 @@
         "text": "Pay in parts without overpaying"
       }
     },
+    "newsletter": {
+      "title": "Subscribe to news and sales",
+      "subtitle": "Stay informed about best deals",
+      "discount": "10% discount",
+      "placeholder": "Enter your email",
+      "subscribe": "Subscribe"
+    },
     "homeBanner": {
       "title": "iPhone 14 Pro Max",
       "subtitle": "at the best price in Moscow",

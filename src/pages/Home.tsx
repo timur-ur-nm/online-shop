@@ -5,6 +5,7 @@ import PopularProducts from "./Home/PopularProducts";
 import PromoBanner from "./Home/PromoBanner";
 import NewArrivals from "./Home/NewArrivals";
 import Benefits from "./Home/Benefits";
+import Newsletter from "./Home/Newsletter";
 
 export default function Home() {
   return (
@@ -14,6 +15,7 @@ export default function Home() {
       <PromoBanner />
       <NewArrivals />
       <Benefits />
+      <Newsletter />
     </div>
   );
 }

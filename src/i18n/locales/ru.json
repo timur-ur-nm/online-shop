@@ -81,6 +81,13 @@
         "text": "Плати частями без переплат"
       }
     },
+    "newsletter": {
+      "title": "Подписка на рассылку акций",
+      "subtitle": "Будь в курсе выгодных предложений",
+      "discount": "Скидка 10%",
+      "placeholder": "Введите ваш e-mail",
+      "subscribe": "Подписаться"
+    },
     "homeBanner": {
       "title": "iPhone 14 Pro Max",
       "subtitle": "по лучшей цене в Москве",
