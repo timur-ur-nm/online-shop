@@ -14,7 +14,7 @@ export default function TopBar() {
     <div className="bg-[#F9F9F9]">
       <div className="container mx-auto flex items-center justify-between px-4 py-2">
         <CitySelect />
-        <div className="flex items-center gap-4">
+        <div className="hidden items-center gap-4 sm:flex">
           {socials.map(({ name, href, icon }) => (
             <a key={name} href={href} target="_blank" rel="noreferrer" aria-label={name}>
               <img src={icon} alt={name} className="h-4 w-4" />

@@ -34,7 +34,7 @@ export default function Footer() {
 
   return (
     <footer className="bg-[#F9F9F9]">
-      <div className="container mx-auto grid grid-cols-4 gap-8 px-4 py-10">
+      <div className="container mx-auto grid grid-cols-1 gap-8 px-4 py-10 sm:grid-cols-2 lg:grid-cols-4">
         <div>
           <img src={logo} alt="logo" className="mb-4 h-10" />
           <p className="text-sm font-semibold text-gray-900">{t("footer.copyright")}</p>

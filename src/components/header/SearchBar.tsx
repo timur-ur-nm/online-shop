@@ -33,15 +33,15 @@ export default function SearchBar() {
 
   return (
     <div className="border-t border-gray-100 bg-white">
-      <div className="container mx-auto flex items-center gap-8 px-4 py-3">
+      <div className="container mx-auto flex items-center gap-3 px-4 py-3 md:gap-8">
         <div ref={dropdownRef} className="relative shrink-0">
           <button
             type="button"
             onClick={() => setIsDropdownOpen((open) => !open)}
-            className="flex items-center gap-2 rounded-2xl bg-[#0071E4] px-4 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#005bb5]"
+            className="flex items-center gap-2 rounded-2xl bg-[#0071E4] px-3 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#005bb5] md:px-4"
           >
-            <img src={burgerdots} alt="burger" className="w-1/6"/>
-            {t("header.catalogTitle")}
+            <img src={burgerdots} alt="burger" className="h-5 w-5 object-contain" />
+            <span className="hidden md:inline">{t("header.catalogTitle")}</span>
           </button>
 
           {isDropdownOpen && (
@@ -86,23 +86,25 @@ export default function SearchBar() {
         <div className="flex shrink-0 items-center gap-2">
           <Link
             to="catalog"
-            className="flex items-center gap-2 rounded bg-gray-100 px-4 py-3 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-200"
+            aria-label={t("header.wishlist")}
+            className="flex items-center gap-2 rounded bg-gray-100 px-3 py-3 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-200 md:px-4"
           >
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4">
               <path d="M12 21s-8-5.3-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.7-8 11-8 11Z" />
             </svg>
-            {t("header.wishlist")}
+            <span className="hidden md:inline">{t("header.wishlist")}</span>
           </Link>
           <Link
             to="catalog"
-            className="flex items-center gap-2 rounded bg-gray-100 px-4 py-3 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-200"
+            aria-label={t("header.cart")}
+            className="flex items-center gap-2 rounded bg-gray-100 px-3 py-3 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-200 md:px-4"
           >
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4">
               <path d="M3 4h2l2.5 12h11L21 8H6" />
               <circle cx="9" cy="20" r="1.5" />
               <circle cx="17" cy="20" r="1.5" />
             </svg>
-            {t("header.cart")}
+            <span className="hidden md:inline">{t("header.cart")}</span>
           </Link>
         </div>
       </div>

@@ -119,7 +119,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         </div>
       </div>
 
-      <h3 className="mt-3 line-clamp-2 min-h-10 text-2xl font-medium text-gray-900">
+      <h3 className="mt-3 line-clamp-2 min-h-10 text-base font-semibold text-gray-900">
         {product.name}
       </h3>
 
@@ -127,24 +127,24 @@ export default function ProductCard({ product }: ProductCardProps) {
         <img
           src={product.image}
           alt={product.name}
-          className="my-3 w-full object-contain"
+          className="my-3 h-44 w-full object-contain"
         />
       )}
 
       <div className="flex items-center gap-1.5">
         <span
-          className={`h-2 w-2 rounded-full ${product.inStock ? "bg-green-500" : "bg-red-500"}`}
+          className={`h-2 w-2 shrink-0 rounded-full ${product.inStock ? "bg-green-500" : "bg-red-500"}`}
         />
-        <span className="text-xl text-gray-600">
+        <span className="text-sm text-gray-600">
           {product.inStock ? t("pages.productCard.inStock") : t("pages.productCard.outOfStock")}
         </span>
       </div>
 
-      <div className="mt-3 flex flex-wrap items-baseline gap-2">
+      <div className="mt-2 flex flex-wrap items-baseline gap-2">
         {hasDiscount && (
-          <span className="text-xl text-gray-400 line-through">{product.oldPrice} ₽</span>
+          <span className="text-sm text-gray-400 line-through">{product.oldPrice} ₽</span>
         )}
-        <span className={`font-bold text-gray-900 ${hasDiscount ? "text-3xl" : "text-2xl"}`}>
+        <span className={`font-bold leading-none text-gray-900 ${hasDiscount ? "text-[32px]" : "text-xl"}`}>
           {product.price} ₽
         </span>
       </div>
@@ -152,7 +152,7 @@ export default function ProductCard({ product }: ProductCardProps) {
       <button
         type="button"
         onClick={() => setInCart((prev) => !prev)}
-        className={`mt-4 flex w-full items-center justify-center gap-2 rounded-lg py-2.5 text-xl font-semibold text-white transition-colors ${
+        className={`mt-4 flex w-full items-center justify-center gap-2 rounded-lg py-3 text-base font-semibold text-white transition-colors ${
           inCart ? "bg-green-500 hover:bg-green-600" : "bg-[#0071E4] hover:bg-[#005bb5]"
         }`}
       >
@@ -182,7 +182,7 @@ export default function ProductCard({ product }: ProductCardProps) {
         {t(inCart ? "pages.productCard.inCart" : "pages.productCard.addToCart")}
       </button>
 
-      <div className="mt-3 flex items-center justify-between gap-2 text-sm">
+      <div className="mt-3 flex flex-wrap items-center justify-between gap-2 text-sm">
         <button
           type="button"
           className="text-gray-600 transition-colors hover:text-[#0071E4]"

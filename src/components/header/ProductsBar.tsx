@@ -18,14 +18,14 @@ export default function ProductsBar() {
   const { t } = useTranslation();
 
   return (
-    <div className="border-t border-gray-100 bg-white">
+    <div className="hidden border-t border-gray-100 bg-white md:block">
       <div className="container mx-auto px-4">
-        <nav className="flex items-center justify-between py-2">
+        <nav className="flex items-center justify-between gap-4 overflow-x-auto py-2">
           {products.map(({ key, icon }) => (
-            <div key={key} className="group relative">
+            <div key={key} className="group relative shrink-0">
               <button
                 type="button"
-                className="relative flex items-center gap-2 px-4 pb-2 text-[18px] font-medium text-gray-700 transition-colors after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:origin-left after:scale-x-0 after:bg-[#0071E4] after:transition-transform after:duration-300 after:content-[''] group-hover:text-[#0071E4] group-hover:after:scale-x-100"
+                className="relative flex items-center gap-2 px-3 pb-2 text-[16px] font-medium text-gray-700 transition-colors after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:origin-left after:scale-x-0 after:bg-[#0071E4] after:transition-transform after:duration-300 after:content-[''] group-hover:text-[#0071E4] group-hover:after:scale-x-100 lg:text-[18px]"
               >
                 {typeof icon === "string" ? (
                   <img
