@@ -20,7 +20,7 @@ export default function ProductsBar() {
   return (
     <div className="hidden border-t border-gray-100 bg-white md:block">
       <div className="container mx-auto px-4">
-        <nav className="flex items-center justify-between gap-4 overflow-x-auto py-2">
+        <nav className="flex items-center justify-between gap-4 overflow-x-auto py-2 lg:overflow-visible">
           {products.map(({ key, icon }) => (
             <div key={key} className="group relative shrink-0">
               <button

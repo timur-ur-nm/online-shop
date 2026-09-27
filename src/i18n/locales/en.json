@@ -56,6 +56,10 @@
       "title": "Home page",
       "subtitle": "Welcome to our iPhone store"
     },
+    "hero": {
+      "title": "iPhone 14",
+      "price": "from 137 900 ₽"
+    },
     "homePopular": {
       "title": "Popular products"
     },
