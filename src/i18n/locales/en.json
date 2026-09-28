@@ -14,7 +14,8 @@
     "catalogTitle": "Product catalog",
     "searchPlaceholder": "Search...",
     "wishlist": "Favorites",
-    "cart": "Cart"
+    "cart": "Cart",
+    "compare": "Comparison"
   },
   "categories": {
     "smartphones": "Smartphones",
@@ -110,8 +111,33 @@
       "title": "Not found",
       "message": "Page not found"
     },
+    "buyOneClick": {
+      "title": "Buy in one click",
+      "subtitle": "Leave your phone number and we will call you back to place the order",
+      "phoneLabel": "Phone",
+      "phonePlaceholder": "+7 (___) ___-__-__",
+      "order": "Order",
+      "successTitle": "Request sent!",
+      "successText": "We will call you back shortly to confirm your order.",
+      "contactsTitle": "Or give us a call"
+    },
     "catalog": {
       "title": "All catalog"
+    },
+    "cart": {
+      "title": "Cart",
+      "emptyTitle": "Your cart is empty",
+      "emptyText": "Add items from the catalog to place an order.",
+      "goCatalog": "Go to catalog",
+      "total": "Total",
+      "clear": "Clear",
+      "checkout": "Checkout"
+    },
+    "wishlist": {
+      "title": "Favorites"
+    },
+    "compare": {
+      "title": "Comparison"
     },
     "sales": {
       "title": "Sales"

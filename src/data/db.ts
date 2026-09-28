@@ -1,4 +1,5 @@
 import iphoneImage from "../assets/iphone.png";
+import iphoneIcon from "../assets/products/iphone.png";
 import macbookIcon from "../assets/products/macbook.png";
 import ipadIcon from "../assets/products/ipad.png";
 import appleWatchIcon from "../assets/products/apple-watch.png";
@@ -66,7 +67,7 @@ export interface Category {
 }
 
 export const categories: Category[] = [
-  { key: "iphone", label: "products.iphone", icon: iphoneImage },
+  { key: "iphone", label: "products.iphone", icon: iphoneIcon },
   { key: "macbook", label: "products.macbook", icon: macbookIcon },
   { key: "ipad", label: "products.ipad", icon: ipadIcon },
   { key: "appleWatch", label: "products.appleWatch", icon: appleWatchIcon },

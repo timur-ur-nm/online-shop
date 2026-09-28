@@ -1,6 +1,8 @@
 import { createHashRouter, Navigate } from "react-router-dom";
 import Home from "../pages/Home";
 import Catalog from "../pages/Catalog";
+import Wishlist from "../pages/Wishlist";
+import Compare from "../pages/Compare";
 import Sales from "../pages/Sales";
 import Warranty from "../pages/Warranty";
 import ReturnPolicy from "../pages/ReturnPolicy";
@@ -20,6 +22,8 @@ export const router = createHashRouter([
     children: [
       { index: true, element: <Home /> },
       { path: "catalog", element: <Catalog /> },
+      { path: "wishlist", element: <Wishlist /> },
+      { path: "compare", element: <Compare /> },
       { path: "sales", element: <Sales /> },
       { path: "warranty", element: <Warranty /> },
       { path: "return-policy", element: <ReturnPolicy /> },

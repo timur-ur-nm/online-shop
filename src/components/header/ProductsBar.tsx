@@ -8,33 +8,40 @@ export default function ProductsBar() {
     <div className="hidden border-t border-gray-100 bg-white md:block">
       <div className="container mx-auto px-4">
         <nav className="flex items-center justify-between gap-4 py-2">
-          {categories.map(({ key, label, icon }) => (
-            <div key={key} className="group relative shrink-0">
-              <button
-                type="button"
-                className="relative flex items-center gap-2 px-3 pb-2 text-[16px] font-medium text-gray-700 transition-colors after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:origin-left after:scale-x-0 after:bg-[#0071E4] after:transition-transform after:duration-300 after:content-[''] group-hover:text-[#0071E4] group-hover:after:scale-x-100 lg:text-[18px]"
-              >
-                <img src={icon} alt={t(label)} className="h-6 w-6 object-contain" />
-                {t(label)}
-              </button>
+          {categories.map(({ key, label, icon }, index) => {
+            const isLast = index === categories.length - 1;
+            return (
+              <div key={key} className="group relative shrink-0">
+                <button
+                  type="button"
+                  className="relative flex items-center gap-2 px-3 pb-2 text-[16px] font-medium text-gray-700 transition-colors after:absolute after:bottom-0 after:left-0 after:h-[2px] after:w-full after:origin-left after:scale-x-0 after:bg-[#0071E4] after:transition-transform after:duration-300 after:content-[''] group-hover:text-[#0071E4] group-hover:after:scale-x-100 lg:text-[18px]"
+                >
+                  <img src={icon} alt={t(label)} className="h-6 w-6 object-contain" />
+                  {t(label)}
+                </button>
 
-              <div className="pointer-events-none absolute left-1/2 top-full z-50 w-80 max-h-[320px] -translate-x-1/2 overflow-y-auto rounded-b border border-gray-100 bg-white p-3 opacity-0 shadow-lg scrollbar-thin transition-opacity duration-200 group-hover:pointer-events-auto group-hover:opacity-100">
-                {(
-                  t(`products.items.${key}`, {
-                    returnObjects: true,
-                  }) as string[]
-                ).map((item) => (
-                  <a
-                    key={item}
-                    href="#"
-                    className="block rounded px-3 py-2.5 text-[16px] text-gray-700 transition-colors hover:bg-gray-50 hover:text-[#0071E4]"
-                  >
-                    {item}
-                  </a>
-                ))}
+                <div
+                  className={`pointer-events-none absolute top-full z-50 w-80 max-h-[320px] overflow-y-auto rounded-b border border-gray-100 bg-white p-3 opacity-0 shadow-lg scrollbar-thin transition-opacity duration-200 group-hover:pointer-events-auto group-hover:opacity-100 ${
+                    isLast ? "right-0" : "left-0"
+                  }`}
+                >
+                  {(
+                    t(`products.items.${key}`, {
+                      returnObjects: true,
+                    }) as string[]
+                  ).map((item) => (
+                    <a
+                      key={item}
+                      href="#"
+                      className="block rounded px-3 py-2.5 text-[16px] text-gray-700 transition-colors hover:bg-gray-50 hover:text-[#0071E4]"
+                    >
+                      {item}
+                    </a>
+                  ))}
+                </div>
               </div>
-            </div>
-          ))}
+            );
+          })}
         </nav>
       </div>
     </div>

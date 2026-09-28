@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import type { Product } from "../../data/db";
+import { useCart } from "../../context/cart";
+import BuyOneClickModal from "../../components/cart/BuyOneClickModal";
 
 export type { Product };
 
@@ -10,11 +12,13 @@ interface ProductCardProps {
 
 export default function ProductCard({ product }: ProductCardProps) {
   const { t } = useTranslation();
+  const { addItem } = useCart();
   const [rating, setRating] = useState(0);
   const [hovered, setHovered] = useState(0);
   const [liked, setLiked] = useState(false);
   const [copied, setCopied] = useState(false);
   const [inCart, setInCart] = useState(false);
+  const [buyModalOpen, setBuyModalOpen] = useState(false);
 
   const activeStars = hovered || rating;
   const hasDiscount = product.oldPrice !== undefined && product.oldPrice > product.price;
@@ -137,14 +141,17 @@ export default function ProductCard({ product }: ProductCardProps) {
         {hasDiscount && (
           <span className="text-sm text-gray-400 line-through">{product.oldPrice} ₽</span>
         )}
-        <span className={`font-bold leading-none text-gray-900 ${hasDiscount ? "text-[32px]" : "text-xl"}`}>
+        <span className="text-[32px] font-bold leading-none text-gray-900">
           {product.price} ₽
         </span>
       </div>
 
       <button
         type="button"
-        onClick={() => setInCart((prev) => !prev)}
+        onClick={() => {
+          setInCart((prev) => !prev);
+          addItem(product);
+        }}
         className={`mt-4 flex w-full items-center justify-center gap-2 rounded-lg py-3 text-base font-semibold text-white transition-colors ${
           inCart ? "bg-green-500 hover:bg-green-600" : "bg-[#0071E4] hover:bg-[#005bb5]"
         }`}
@@ -184,11 +191,18 @@ export default function ProductCard({ product }: ProductCardProps) {
         </button>
         <button
           type="button"
+          onClick={() => setBuyModalOpen(true)}
           className="text-gray-600 transition-colors hover:text-[#0071E4]"
         >
           {t("pages.productCard.buyOneClick")}
         </button>
       </div>
+
+      <BuyOneClickModal
+        product={product}
+        isOpen={buyModalOpen}
+        onClose={() => setBuyModalOpen(false)}
+      />
     </article>
   );
 }
