@@ -1,9 +1,10 @@
 import { useTranslation } from "react-i18next";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { Link, NavLink, useParams } from "react-router-dom";
 import logo from "../../assets/logo.png";
 import LanguageSwitcher from "../common/LanguageSwitcher";
 import CitySelect from "../common/CitySelect";
+import SearchResultsPanel from "../search/SearchResultsPanel";
 import { navItems } from "../../data/db";
 
 interface InfoBarProps {
@@ -18,6 +19,20 @@ export default function InfoBar({
   const { t } = useTranslation();
   const { lang } = useParams();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isSearchFocused, setIsSearchFocused] = useState(false);
+  const searchRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (searchRef.current && !searchRef.current.contains(event.target as Node)) {
+        setIsSearchFocused(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   const navClass = () =>
     "block py-2.5 text-[16px] text-gray-700 transition-colors hover:text-[#0071E4]";
@@ -112,7 +127,7 @@ export default function InfoBar({
 
       {mobileSearchOpen && (
         <div className="container mx-auto animate-fade-in-down px-4 pb-3 lg:hidden">
-          <div className="relative">
+          <div ref={searchRef} className="relative">
             <svg
               viewBox="0 0 24 24"
               fill="none"
@@ -126,8 +141,17 @@ export default function InfoBar({
             <input
               type="text"
               placeholder={t("header.searchPlaceholder")}
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              onFocus={() => setIsSearchFocused(true)}
+              autoFocus
               className="w-full rounded border border-gray-300 py-2.5 pl-12 pr-4 text-sm text-gray-800 outline-none transition-colors placeholder:text-gray-400 focus:border-[#0071E4]"
             />
+            {isSearchFocused && (
+              <div className="absolute inset-x-0 top-full z-50 mt-2">
+                <SearchResultsPanel query={searchQuery} onNavigate={() => setIsSearchFocused(false)} />
+              </div>
+            )}
           </div>
         </div>
       )}

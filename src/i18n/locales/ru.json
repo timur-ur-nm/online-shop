@@ -15,14 +15,16 @@
     "searchPlaceholder": "Поиск...",
     "wishlist": "Избранное",
     "cart": "Корзина",
-    "compare": "Сравнение"
+    "compare": "Сравнение",
+    "recentlyViewed": "Последние просмотренные",
+    "products": "Товары",
+    "noResults": "Ничего не найдено"
   },
   "categories": {
     "smartphones": "Смартфоны",
     "tablets": "Планшеты",
     "computers": "Компьютеры",
     "watches": "Часы",
-    "accessories": "Аксессуары",
     "sales": "Акции"
   },
   "products": {
@@ -31,14 +33,32 @@
     "ipad": "iPad",
     "appleWatch": "Apple Watch",
     "airpods": "AirPods",
-    "accessories": "Аксессуары",
     "items": {
-      "iphone": ["iPhone 16 Pro", "iPhone 16", "iPhone 15", "iPhone SE"],
-      "macbook": ["MacBook Pro 14", "MacBook Pro 16", "MacBook Air"],
-      "ipad": ["iPad Pro", "iPad Air", "iPad mini"],
-      "appleWatch": ["Apple Watch Ultra 2", "Apple Watch Series 10", "Apple Watch SE"],
-      "airpods": ["AirPods Pro 2", "AirPods 4", "AirPods Max"],
-      "accessories": ["Чехлы", "Защитные стёкла", "Зарядные устройства"]
+      "iphone": [
+        { "group": "iPhone 16", "items": ["iPhone 16 Pro", "iPhone 16"] },
+        { "group": "iPhone 15", "items": ["iPhone 15 Pro Max", "iPhone 15 Pro", "iPhone 15"] },
+        { "group": "iPhone 14", "items": ["iPhone 14 Pro Max", "iPhone 14"] },
+        { "group": "iPhone 13 и старше", "items": ["iPhone 13", "iPhone 12", "iPhone 11", "iPhone XR"] },
+        { "group": "iPhone SE", "items": ["iPhone SE (3-го поколения)"] }
+      ],
+      "macbook": [
+        { "group": "MacBook Pro", "items": ["MacBook Pro 14 M3", "MacBook Pro 16 M3 Max"] },
+        { "group": "MacBook Air", "items": ["MacBook Air 13 M3", "MacBook Air 15 M2"] },
+        { "group": "iMac", "items": ["iMac 24 M3"] }
+      ],
+      "ipad": [
+        { "group": "iPad Pro", "items": ["iPad Pro 11 M4", "iPad Pro 13 M4"] },
+        { "group": "iPad Air", "items": ["iPad Air 11 M2", "iPad Air 13 M2"] },
+        { "group": "iPad mini", "items": ["iPad mini 7"] }
+      ],
+      "appleWatch": [
+        { "group": "Apple Watch Ultra", "items": ["Apple Watch Ultra 2"] },
+        { "group": "Apple Watch Series", "items": ["Apple Watch Series 10", "Apple Watch Series 9"] },
+        { "group": "Apple Watch SE", "items": ["Apple Watch SE 2"] }
+      ],
+      "airpods": [
+        { "group": "Наушники", "items": ["AirPods Pro 2", "AirPods 4", "AirPods Max"] }
+      ]
     }
   },
   "nav": {
@@ -107,6 +127,20 @@
       "wantCheaper": "Хочу дешевле",
       "buyOneClick": "Купить в один клик"
     },
+    "product": {
+      "notFound": "Товар не найден",
+      "description": "Описание",
+      "characteristics": "Характеристики",
+      "showMore": "Подробнее о товаре",
+      "descText": "Оригинальный смартфон Apple в заводской упаковке с полной гарантией 12 месяцев. Бесплатная доставка по Москве за 1–2 дня, помощь в настройке и переносе данных из вашего старого телефона.",
+      "warranty": "12 месяцев",
+      "specs": {
+        "model": "Модель",
+        "price": "Цена",
+        "availability": "Наличие",
+        "warranty": "Гарантия"
+      }
+    },
     "notFound": {
       "title": "Не найдено",
       "message": "Страница не найдена"
@@ -122,7 +156,28 @@
       "contactsTitle": "Или позвоните нам"
     },
     "catalog": {
-      "title": "Весь каталог"
+      "title": "Весь каталог",
+      "found": "Найдено: {{count}}",
+      "empty": "Ничего не найдено",
+      "noStock": "Товаров этой категории пока нет в наличии",
+      "filters": "Фильтры",
+      "filtersTitle": "Фильтры и сортировка",
+      "show": "Показать товары",
+      "reset": "Сбросить",
+      "sort": "Сортировка",
+      "sortBy": {
+        "popular": "По популярности",
+        "priceAsc": "Сначала дешевле",
+        "priceDesc": "Сначала дороже",
+        "nameAsc": "По названию",
+        "discount": "По размеру скидки"
+      },
+      "price": "Цена",
+      "from": "от",
+      "to": "до",
+      "availability": "Наличие",
+      "inStockOnly": "В наличии",
+      "discountOnly": "Со скидкой"
     },
     "cart": {
       "title": "Корзина",
@@ -167,8 +222,7 @@
       "iphone": "iPhone",
       "ipad": "iPad",
       "macbook": "MacBook и iMac",
-      "watch": "Apple Watch",
-      "accessories": "Аксессуары"
+      "watch": "Apple Watch"
     }
   },
   "footer": {

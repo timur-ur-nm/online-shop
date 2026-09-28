@@ -1,7 +1,9 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { Link, useParams } from "react-router-dom";
 import type { Product } from "../../data/db";
 import { useCart } from "../../context/cart";
+import { useRecentlyViewed } from "../../context/recentlyViewed";
 import BuyOneClickModal from "../../components/cart/BuyOneClickModal";
 
 export type { Product };
@@ -12,13 +14,19 @@ interface ProductCardProps {
 
 export default function ProductCard({ product }: ProductCardProps) {
   const { t } = useTranslation();
+  const { lang } = useParams();
   const { addItem } = useCart();
+  const { track } = useRecentlyViewed();
   const [rating, setRating] = useState(0);
   const [hovered, setHovered] = useState(0);
   const [liked, setLiked] = useState(false);
   const [copied, setCopied] = useState(false);
   const [inCart, setInCart] = useState(false);
   const [buyModalOpen, setBuyModalOpen] = useState(false);
+
+  useEffect(() => {
+    track(product);
+  }, [product, track]);
 
   const activeStars = hovered || rating;
   const hasDiscount = product.oldPrice !== undefined && product.oldPrice > product.price;
@@ -116,16 +124,21 @@ export default function ProductCard({ product }: ProductCardProps) {
         </div>
       </div>
 
-      <h3 className="mt-3 line-clamp-2 min-h-10 text-base font-semibold text-gray-900">
+      <Link
+        to={`/${lang}/product/${product.id}`}
+        className="mt-3 line-clamp-2 min-h-10 text-base font-semibold text-gray-900 transition-colors hover:text-[#0071E4]"
+      >
         {product.name}
-      </h3>
+      </Link>
 
       {product.image && (
-        <img
-          src={product.image}
-          alt={product.name}
-          className="my-3 h-44 w-full object-contain"
-        />
+        <Link to={`/${lang}/product/${product.id}`} aria-label={product.name}>
+          <img
+            src={product.image}
+            alt={product.name}
+            className="my-3 h-44 w-full object-contain"
+          />
+        </Link>
       )}
 
       <div className="flex items-center gap-1.5">

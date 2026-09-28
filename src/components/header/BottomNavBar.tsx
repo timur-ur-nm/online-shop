@@ -1,13 +1,13 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
-import { NavLink, useLocation } from "react-router-dom";
+import { Link, NavLink, useLocation, useParams } from "react-router-dom";
 import { categories } from "../../data/db";
 import { useCart } from "../../context/cart";
 
 export default function BottomNavBar() {
   const { t } = useTranslation();
+  const { lang } = useParams();
   const [catalogOpen, setCatalogOpen] = useState(false);
-  const [openCategory, setOpenCategory] = useState<string | null>("iphone");
   const { openCart, isOpen: cartOpen } = useCart();
   const location = useLocation();
 
@@ -73,51 +73,17 @@ export default function BottomNavBar() {
               </button>
             </div>
             <div className="flex flex-col divide-y divide-gray-100 px-4 py-2">
-              {categories.map(({ key, label, icon }) => {
-                const isOpen = openCategory === key;
-                return (
-                  <div key={key}>
-                    <button
-                      type="button"
-                      aria-expanded={isOpen}
-                      onClick={() => setOpenCategory(isOpen ? null : key)}
-                      className="flex w-full items-center justify-between gap-2 py-3 text-left"
-                    >
-                      <span className="flex items-center gap-2 text-[15px] font-semibold text-gray-900">
-                        <img src={icon} alt={t(label)} className="h-5 w-5 object-contain" />
-                        {t(label)}
-                      </span>
-                      <svg
-                        viewBox="0 0 24 24"
-                        fill="none"
-                        stroke="currentColor"
-                        strokeWidth="2"
-                        className={`h-4 w-4 text-gray-400 transition-transform duration-200 ${
-                          isOpen ? "rotate-180" : ""
-                        }`}
-                      >
-                        <path d="m6 9 6 6 6-6" />
-                      </svg>
-                    </button>
-                    <div className={`accordion-collapse ${isOpen ? "" : "closed"}`}>
-                        <div className="flex flex-col">
-                          {(t(`products.items.${key}`, {
-                            returnObjects: true,
-                          }) as string[]).map((item) => (
-                            <a
-                              key={item}
-                              href="#"
-                              onClick={() => setCatalogOpen(false)}
-                              className="block rounded-lg py-2 pl-8 text-[14px] text-gray-600 transition-colors hover:bg-blue-50 hover:text-[#0071E4]"
-                            >
-                              {item}
-                            </a>
-                          ))}
-                        </div>
-                      </div>
-                  </div>
-                );
-              })}
+              {categories.map(({ key, label, icon }) => (
+                <Link
+                  key={key}
+                  to={`/${lang}/catalog?category=${key}`}
+                  onClick={() => setCatalogOpen(false)}
+                  className="flex items-center gap-2 py-3 text-[15px] font-semibold text-gray-900"
+                >
+                  <img src={icon} alt={t(label)} className="h-5 w-5 object-contain" />
+                  {t(label)}
+                </Link>
+              ))}
             </div>
         </div>
       )}

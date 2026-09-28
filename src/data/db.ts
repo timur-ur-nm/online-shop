@@ -17,6 +17,7 @@ export interface Product {
   oldPrice?: number;
   ratingCount?: number;
   inStock?: boolean;
+  category?: string;
   image?: string;
 }
 
@@ -38,6 +39,7 @@ export const db = {
     ...item,
     ratingCount: (item.id.charCodeAt(0) * 7 + parseInt(item.id, 10) * 13) % 300,
     inStock: parseInt(item.id, 10) % 3 !== 0,
+    category: "iphone",
     image: iphoneImage,
   })) satisfies Product[],
 } as const;
@@ -72,7 +74,6 @@ export const categories: Category[] = [
   { key: "ipad", label: "products.ipad", icon: ipadIcon },
   { key: "appleWatch", label: "products.appleWatch", icon: appleWatchIcon },
   { key: "airpods", label: "products.airpods", icon: airpodsIcon },
-  { key: "accessories", label: "products.accessories", icon: iphoneImage },
 ];
 
 export const catalogCategories: CategoryLink[] = [
@@ -80,7 +81,6 @@ export const catalogCategories: CategoryLink[] = [
   { to: "catalog?category=tablets", label: "categories.tablets" },
   { to: "catalog?category=computers", label: "categories.computers" },
   { to: "catalog?category=watches", label: "categories.watches" },
-  { to: "catalog?category=accessories", label: "categories.accessories" },
 ];
 
 export const navItems: NavItem[] = [
@@ -109,7 +109,6 @@ export const footerProductLinks: CategoryLink[] = [
   { to: "catalog?category=ipad", label: "pages.products.ipad" },
   { to: "catalog?category=macbook", label: "pages.products.macbook" },
   { to: "catalog?category=watch", label: "pages.products.watch" },
-  { to: "catalog?category=accessories", label: "pages.products.accessories" },
 ];
 
 export interface HeroSlide {

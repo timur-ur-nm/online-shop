@@ -15,14 +15,16 @@
     "searchPlaceholder": "Search...",
     "wishlist": "Favorites",
     "cart": "Cart",
-    "compare": "Comparison"
+    "compare": "Comparison",
+    "recentlyViewed": "Recently viewed",
+    "products": "Products",
+    "noResults": "Nothing found"
   },
   "categories": {
     "smartphones": "Smartphones",
     "tablets": "Tablets",
     "computers": "Computers",
     "watches": "Watches",
-    "accessories": "Accessories",
     "sales": "Sales"
   },
   "products": {
@@ -31,14 +33,32 @@
     "ipad": "iPad",
     "appleWatch": "Apple Watch",
     "airpods": "AirPods",
-    "accessories": "Accessories",
     "items": {
-      "iphone": ["iPhone 16 Pro", "iPhone 16", "iPhone 15", "iPhone SE"],
-      "macbook": ["MacBook Pro 14", "MacBook Pro 16", "MacBook Air"],
-      "ipad": ["iPad Pro", "iPad Air", "iPad mini"],
-      "appleWatch": ["Apple Watch Ultra 2", "Apple Watch Series 10", "Apple Watch SE"],
-      "airpods": ["AirPods Pro 2", "AirPods 4", "AirPods Max"],
-      "accessories": ["Cases", "Screen protectors", "Chargers"]
+      "iphone": [
+        { "group": "iPhone 16", "items": ["iPhone 16 Pro", "iPhone 16"] },
+        { "group": "iPhone 15", "items": ["iPhone 15 Pro Max", "iPhone 15 Pro", "iPhone 15"] },
+        { "group": "iPhone 14", "items": ["iPhone 14 Pro Max", "iPhone 14"] },
+        { "group": "iPhone 13 and older", "items": ["iPhone 13", "iPhone 12", "iPhone 11", "iPhone XR"] },
+        { "group": "iPhone SE", "items": ["iPhone SE (3rd gen)"] }
+      ],
+      "macbook": [
+        { "group": "MacBook Pro", "items": ["MacBook Pro 14 M3", "MacBook Pro 16 M3 Max"] },
+        { "group": "MacBook Air", "items": ["MacBook Air 13 M3", "MacBook Air 15 M2"] },
+        { "group": "iMac", "items": ["iMac 24 M3"] }
+      ],
+      "ipad": [
+        { "group": "iPad Pro", "items": ["iPad Pro 11 M4", "iPad Pro 13 M4"] },
+        { "group": "iPad Air", "items": ["iPad Air 11 M2", "iPad Air 13 M2"] },
+        { "group": "iPad mini", "items": ["iPad mini 7"] }
+      ],
+      "appleWatch": [
+        { "group": "Apple Watch Ultra", "items": ["Apple Watch Ultra 2"] },
+        { "group": "Apple Watch Series", "items": ["Apple Watch Series 10", "Apple Watch Series 9"] },
+        { "group": "Apple Watch SE", "items": ["Apple Watch SE 2"] }
+      ],
+      "airpods": [
+        { "group": "Headphones", "items": ["AirPods Pro 2", "AirPods 4", "AirPods Max"] }
+      ]
     }
   },
   "nav": {
@@ -107,6 +127,20 @@
       "wantCheaper": "Want it cheaper",
       "buyOneClick": "Buy in one click"
     },
+    "product": {
+      "notFound": "Product not found",
+      "description": "Description",
+      "characteristics": "Specifications",
+      "showMore": "More about the product",
+      "descText": "Original Apple smartphone in factory packaging with full 12-month warranty. Free delivery in Moscow within 1-2 days, setup help and data transfer from your old phone.",
+      "warranty": "12 months",
+      "specs": {
+        "model": "Model",
+        "price": "Price",
+        "availability": "Availability",
+        "warranty": "Warranty"
+      }
+    },
     "notFound": {
       "title": "Not found",
       "message": "Page not found"
@@ -122,7 +156,28 @@
       "contactsTitle": "Or give us a call"
     },
     "catalog": {
-      "title": "All catalog"
+      "title": "All catalog",
+      "found": "Found: {{count}}",
+      "empty": "Nothing found",
+      "noStock": "Products of this category are not in stock yet",
+      "filters": "Filters",
+      "filtersTitle": "Filters and sorting",
+      "show": "Show products",
+      "reset": "Reset",
+      "sort": "Sort by",
+      "sortBy": {
+        "popular": "Most popular",
+        "priceAsc": "Price low to high",
+        "priceDesc": "Price high to low",
+        "nameAsc": "By name",
+        "discount": "Biggest discount"
+      },
+      "price": "Price",
+      "from": "from",
+      "to": "to",
+      "availability": "Availability",
+      "inStockOnly": "In stock",
+      "discountOnly": "On sale"
     },
     "cart": {
       "title": "Cart",
@@ -167,8 +222,7 @@
       "iphone": "iPhone",
       "ipad": "iPad",
       "macbook": "MacBook и iMac",
-      "watch": "Apple Watch",
-      "accessories": "Accessories"
+      "watch": "Apple Watch"
     }
   },
   "footer": {
