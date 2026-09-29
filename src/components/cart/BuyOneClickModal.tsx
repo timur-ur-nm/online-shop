@@ -2,6 +2,7 @@ import { useState, type FormEvent } from "react";
 import { useTranslation } from "react-i18next";
 import type { Product } from "../../data/db";
 import { socials } from "../../data/db";
+import { createQuickOrder } from "../../api/orders";
 
 interface BuyOneClickModalProps {
   product: Product;
@@ -13,18 +14,33 @@ export default function BuyOneClickModal({ product, isOpen, onClose }: BuyOneCli
   const { t } = useTranslation();
   const [submitted, setSubmitted] = useState(false);
   const [phone, setPhone] = useState("");
+  const [error, setError] = useState(false);
+  const [orderNumber, setOrderNumber] = useState("");
 
   if (!isOpen) return null;
 
-  const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
+  const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (!phone.trim()) return;
-    setSubmitted(true);
+    setError(false);
+    try {
+      const order = await createQuickOrder({
+        product_id: Number(product.id),
+        quantity: 1,
+        phone: phone.trim(),
+      });
+      setOrderNumber(order.number);
+      setSubmitted(true);
+    } catch {
+      setError(true);
+    }
   };
 
   const handleClose = () => {
     setSubmitted(false);
     setPhone("");
+    setError(false);
+    setOrderNumber("");
     onClose();
   };
 
@@ -64,6 +80,11 @@ export default function BuyOneClickModal({ product, isOpen, onClose }: BuyOneCli
                 <path d="m8.5 12 2.5 2.5 5-5" />
               </svg>
               <h3 className="text-lg font-semibold text-gray-900">{t("pages.buyOneClick.successTitle")}</h3>
+              {orderNumber && (
+                <p className="text-sm font-semibold text-[#0071E4]">
+                  {t("pages.buyOneClick.orderNumber", { number: orderNumber })}
+                </p>
+              )}
               <p className="max-w-xs text-sm text-gray-500">{t("pages.buyOneClick.successText")}</p>
               <button
                 type="button"
@@ -74,7 +95,7 @@ export default function BuyOneClickModal({ product, isOpen, onClose }: BuyOneCli
               </button>
             </div>
           ) : (
-            <form onSubmit={handleSubmit} className="mt-6 flex flex-col gap-2">
+            <form onSubmit={(e) => void handleSubmit(e)} className="mt-6 flex flex-col gap-2">
               <label htmlFor="phone" className="text-sm font-medium text-gray-700">
                 {t("pages.buyOneClick.phoneLabel")}
               </label>
@@ -88,6 +109,9 @@ export default function BuyOneClickModal({ product, isOpen, onClose }: BuyOneCli
                 className="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm text-gray-800 outline-none transition-colors placeholder:text-gray-400 focus:border-[#0071E4]"
               />
               <p className="text-xs text-gray-500">{t("pages.buyOneClick.subtitle")}</p>
+              {error && (
+                <p className="text-xs font-medium text-red-500">{t("pages.buyOneClick.error")}</p>
+              )}
               <button
                 type="submit"
                 className="mt-2 rounded-lg bg-[#0071E4] px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#005bb5]"

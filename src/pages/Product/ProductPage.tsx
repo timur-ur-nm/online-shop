@@ -1,26 +1,50 @@
 import { Link, Navigate, useParams } from "react-router-dom";
 import { useTranslation } from "react-i18next";
-import { useState } from "react";
-import { getProductById } from "../../data/db";
+import { useEffect, useState } from "react";
+import { fetchProductBySlug } from "../../api/client";
+import { useProducts } from "../../context/products";
 import { useCart } from "../../context/cart";
 import BuyOneClickModal from "../../components/cart/BuyOneClickModal";
+import type { Product } from "../../data/db";
 
 export default function ProductPage() {
   const { t } = useTranslation();
-  const { id } = useParams();
-  const { addItem } = useCart();
-  const [inCart, setInCart] = useState(false);
+  const { slug } = useParams();
+  const { products, loading } = useProducts();
+  const { items, addItem, removeItem, updateQuantity } = useCart();
+  const [fetched, setFetched] = useState<Product | null>(null);
+  const [detailLoading, setDetailLoading] = useState(true);
   const [liked, setLiked] = useState(false);
   const [buyModalOpen, setBuyModalOpen] = useState(false);
 
-  const product = getProductById(id ?? "");
+  useEffect(() => {
+    if (!slug) return;
+    let cancelled = false;
+    fetchProductBySlug(slug)
+      .then((p) => {
+        if (!cancelled) setFetched(p);
+      })
+      .catch(() => {
+        if (!cancelled) setFetched(null);
+      })
+      .finally(() => {
+        if (!cancelled) setDetailLoading(false);
+      });
+    return () => {
+      cancelled = true;
+    };
+  }, [slug]);
+
+  const product = products.find((p) => p.slug === slug) ?? fetched;
+
+  if (!product && (loading || detailLoading)) {
+    return <div className="container mx-auto px-4 py-16 text-center text-sm text-gray-500">{t("common.loading")}</div>;
+  }
 
   if (!product) return <Navigate to=".." replace />;
 
-  const handleAddToCart = () => {
-    addItem(product);
-    setInCart(true);
-  };
+  const cartItem = items.find((item) => item.product.id === product.id);
+  const cartQuantity = cartItem?.quantity ?? 0;
 
   return (
     <div className="container mx-auto px-4 py-6">
@@ -77,18 +101,44 @@ export default function ProductPage() {
           </div>
 
           <div className="mt-6 flex flex-col gap-3 sm:flex-row">
-            <button
-              type="button"
-              onClick={handleAddToCart}
-              className="flex items-center justify-center gap-2 rounded-lg bg-[#0071E4] px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#005bb5]"
-            >
-              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4">
-                <path d="M3 4h2l2.5 12h11L21 8H6" />
-                <circle cx="9" cy="20" r="1.5" />
-                <circle cx="17" cy="20" r="1.5" />
-              </svg>
-              {t(inCart ? "pages.productCard.inCart" : "pages.productCard.addToCart")}
-            </button>
+            {cartQuantity > 0 ? (
+              <div className="flex items-center justify-between self-start rounded-lg border border-[#0071E4] sm:w-56">
+                <button
+                  type="button"
+                  aria-label={t("pages.productCard.decrease")}
+                  onClick={() =>
+                    cartQuantity === 1
+                      ? removeItem(product.id)
+                      : updateQuantity(product.id, cartQuantity - 1)
+                  }
+                  className="flex h-12 w-12 items-center justify-center text-2xl font-semibold text-[#0071E4] transition-colors hover:bg-blue-50"
+                >
+                  −
+                </button>
+                <span className="text-base font-semibold text-gray-900">{cartQuantity}</span>
+                <button
+                  type="button"
+                  aria-label={t("pages.productCard.increase")}
+                  onClick={() => updateQuantity(product.id, cartQuantity + 1)}
+                  className="flex h-12 w-12 items-center justify-center text-2xl font-semibold text-[#0071E4] transition-colors hover:bg-blue-50"
+                >
+                  +
+                </button>
+              </div>
+            ) : (
+              <button
+                type="button"
+                onClick={() => addItem(product)}
+                className="flex items-center justify-center gap-2 rounded-lg bg-[#0071E4] px-6 py-3 text-sm font-semibold text-white transition-colors hover:bg-[#005bb5]"
+              >
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4">
+                  <path d="M3 4h2l2.5 12h11L21 8H6" />
+                  <circle cx="9" cy="20" r="1.5" />
+                  <circle cx="17" cy="20" r="1.5" />
+                </svg>
+                {t("pages.productCard.addToCart")}
+              </button>
+            )}
             <button
               type="button"
               onClick={() => setBuyModalOpen(true)}
@@ -139,7 +189,7 @@ export default function ProductPage() {
       <div className="mt-10">
         <h2 className="text-lg font-semibold text-gray-900">{t("pages.product.description")}</h2>
         <p className="mt-3 max-w-3xl text-sm leading-relaxed text-gray-600">
-          {t("pages.product.descText")}
+          {product.description ?? t("pages.product.descText")}
         </p>
       </div>
 

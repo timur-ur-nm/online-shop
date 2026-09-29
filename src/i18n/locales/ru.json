@@ -1,7 +1,8 @@
 {
   "common": {
     "footer": "Подвал",
-    "home": "Главная"
+    "home": "Главная",
+    "loading": "Загрузка..."
   },
   "header": {
     "city": "Город",
@@ -18,13 +19,12 @@
     "compare": "Сравнение",
     "recentlyViewed": "Последние просмотренные",
     "products": "Товары",
-    "noResults": "Ничего не найдено"
+    "noResults": "Ничего не найдено",
+    "account": "Личный кабинет",
+    "allProducts": "Все товары",
+    "noSubcategories": "Нет подкатегорий"
   },
   "categories": {
-    "smartphones": "Смартфоны",
-    "tablets": "Планшеты",
-    "computers": "Компьютеры",
-    "watches": "Часы",
     "sales": "Акции"
   },
   "products": {
@@ -32,34 +32,7 @@
     "macbook": "MacBook",
     "ipad": "iPad",
     "appleWatch": "Apple Watch",
-    "airpods": "AirPods",
-    "items": {
-      "iphone": [
-        { "group": "iPhone 16", "items": ["iPhone 16 Pro", "iPhone 16"] },
-        { "group": "iPhone 15", "items": ["iPhone 15 Pro Max", "iPhone 15 Pro", "iPhone 15"] },
-        { "group": "iPhone 14", "items": ["iPhone 14 Pro Max", "iPhone 14"] },
-        { "group": "iPhone 13 и старше", "items": ["iPhone 13", "iPhone 12", "iPhone 11", "iPhone XR"] },
-        { "group": "iPhone SE", "items": ["iPhone SE (3-го поколения)"] }
-      ],
-      "macbook": [
-        { "group": "MacBook Pro", "items": ["MacBook Pro 14 M3", "MacBook Pro 16 M3 Max"] },
-        { "group": "MacBook Air", "items": ["MacBook Air 13 M3", "MacBook Air 15 M2"] },
-        { "group": "iMac", "items": ["iMac 24 M3"] }
-      ],
-      "ipad": [
-        { "group": "iPad Pro", "items": ["iPad Pro 11 M4", "iPad Pro 13 M4"] },
-        { "group": "iPad Air", "items": ["iPad Air 11 M2", "iPad Air 13 M2"] },
-        { "group": "iPad mini", "items": ["iPad mini 7"] }
-      ],
-      "appleWatch": [
-        { "group": "Apple Watch Ultra", "items": ["Apple Watch Ultra 2"] },
-        { "group": "Apple Watch Series", "items": ["Apple Watch Series 10", "Apple Watch Series 9"] },
-        { "group": "Apple Watch SE", "items": ["Apple Watch SE 2"] }
-      ],
-      "airpods": [
-        { "group": "Наушники", "items": ["AirPods Pro 2", "AirPods 4", "AirPods Max"] }
-      ]
-    }
+    "airpods": "AirPods"
   },
   "nav": {
     "catalog": "Весь каталог",
@@ -124,6 +97,8 @@
       "outOfStock": "Нет в наличии",
       "addToCart": "В корзину",
       "inCart": "В корзине",
+      "decrease": "Убавить количество",
+      "increase": "Увеличить количество",
       "wantCheaper": "Хочу дешевле",
       "buyOneClick": "Купить в один клик"
     },
@@ -151,8 +126,10 @@
       "phoneLabel": "Телефон",
       "phonePlaceholder": "+7 (___) ___-__-__",
       "order": "Заказать",
-      "successTitle": "Заявка отправлена!",
+      "orderNumber": "Номер заказа: {{number}}",
+      "successTitle": "Заказ оформлен!",
       "successText": "Мы перезвоним вам в ближайшее время для подтверждения заказа.",
+      "error": "Не удалось оформить заказ. Попробуйте ещё раз.",
       "contactsTitle": "Или позвоните нам"
     },
     "catalog": {
@@ -177,7 +154,13 @@
       "to": "до",
       "availability": "Наличие",
       "inStockOnly": "В наличии",
-      "discountOnly": "Со скидкой"
+      "discountOnly": "Со скидкой",
+      "color": "Цвет",
+      "storage": "Объём памяти",
+      "condition": "Состояние",
+      "allColors": "Все цвета",
+      "allStorages": "Любой объём",
+      "allConditions": "Любое состояние"
     },
     "cart": {
       "title": "Корзина",
@@ -187,6 +170,30 @@
       "total": "Итого",
       "clear": "Очистить",
       "checkout": "Оформить заказ"
+    },
+    "checkout": {
+      "title": "Оформление заказа",
+      "fullName": "ФИО",
+      "fullNamePlaceholder": "Иванов Иван Иванович",
+      "phone": "Телефон",
+      "phonePlaceholder": "+7 (___) ___-__-__",
+      "email": "Email",
+      "emailPlaceholder": "you@example.com",
+      "address": "Адрес доставки",
+      "addressPlaceholder": "Город, улица, дом, квартира",
+      "comment": "Комментарий",
+      "commentPlaceholder": "Комментарий к заказу (необязательно)",
+      "payment": "Способ оплаты",
+      "payCard": "Картой онлайн",
+      "payCash": "Наличными при получении",
+      "payYandex": "ЮMoney",
+      "paySbp": "СБП",
+      "submit": "Оформить заказ",
+      "error": "Не удалось оформить заказ. Проверьте данные и попробуйте снова.",
+      "successTitle": "Заказ оформлен",
+      "successText": "Заказ {{number}}. Мы позвоним вам для подтверждения.",
+      "successToAccount": "Перейти в личный кабинет",
+      "successContinue": "Продолжить покупки"
     },
     "wishlist": {
       "title": "Избранное"
@@ -234,5 +241,34 @@
     "hours": "С 10:00 до 21:00, без выходных",
     "callback": "Заказать звонок",
     "address": "Москва, ул. Барклая, 8"
+  },
+  "auth": {
+    "login": "Войти",
+    "register": "Зарегистрироваться",
+    "loginTitle": "Вход в личный кабинет",
+    "loginSubtitle": "Войдите, чтобы видеть свои заказы и избранное",
+    "registerTitle": "Регистрация",
+    "registerSubtitle": "Создайте аккаунт, чтобы оформлять заказы и хранить историю покупок",
+    "username": "Логин",
+    "password": "Пароль",
+    "confirmPassword": "Повторите пароль",
+    "email": "E-mail",
+    "noAccount": "Нет аккаунта?",
+    "haveAccount": "Уже есть аккаунт?",
+    "credentialsError": "Неверный логин или пароль",
+    "registerError": "Не удалось зарегистрироваться. Попробуйте ещё раз",
+    "passwordMismatch": "Пароли не совпадают",
+    "logout": "Выйти",
+    "loginRequired": "Войдите в аккаунт",
+    "loginRequiredHint": "Чтобы видеть свои заказы и личные данные, войдите или зарегистрируйтесь"
+  },
+  "account": {
+    "title": "Личный кабинет",
+    "greeting": "Здравствуйте, {{username}}!",
+    "profile": "Профиль",
+    "orders": "Мои заказы",
+    "noOrders": "У вас пока нет заказов",
+    "ordersError": "Не удалось загрузить заказы. Попробуйте позже",
+    "cancelOrder": "Отменить"
   }
 }

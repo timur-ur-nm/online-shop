@@ -163,6 +163,18 @@ export default function InfoBar({
               <CitySelect />
             </div>
             <div className="my-2 h-px bg-gray-100" />
+            <Link
+              to={`/${lang}/account`}
+              onClick={() => setIsMenuOpen(false)}
+              className="flex items-center gap-2 py-2.5 text-[16px] text-gray-700 transition-colors hover:text-[#0071E4]"
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-5 w-5">
+                <circle cx="12" cy="8" r="4" />
+                <path d="M4 20c1.5-3.5 4.5-5 8-5s6.5 1.5 8 5" />
+              </svg>
+              {t("header.account")}
+            </Link>
+            <div className="my-2 h-px bg-gray-100" />
             {navItems.map(({ to, label }) => (
               <NavLink
                 key={label}

@@ -1,7 +1,8 @@
 {
   "common": {
     "footer": "Footer",
-    "home": "Home"
+    "home": "Home",
+    "loading": "Loading..."
   },
   "header": {
     "city": "City",
@@ -18,13 +19,12 @@
     "compare": "Comparison",
     "recentlyViewed": "Recently viewed",
     "products": "Products",
-    "noResults": "Nothing found"
+    "noResults": "Nothing found",
+    "account": "My account",
+    "allProducts": "All products",
+    "noSubcategories": "No subcategories"
   },
   "categories": {
-    "smartphones": "Smartphones",
-    "tablets": "Tablets",
-    "computers": "Computers",
-    "watches": "Watches",
     "sales": "Sales"
   },
   "products": {
@@ -32,34 +32,7 @@
     "macbook": "MacBook",
     "ipad": "iPad",
     "appleWatch": "Apple Watch",
-    "airpods": "AirPods",
-    "items": {
-      "iphone": [
-        { "group": "iPhone 16", "items": ["iPhone 16 Pro", "iPhone 16"] },
-        { "group": "iPhone 15", "items": ["iPhone 15 Pro Max", "iPhone 15 Pro", "iPhone 15"] },
-        { "group": "iPhone 14", "items": ["iPhone 14 Pro Max", "iPhone 14"] },
-        { "group": "iPhone 13 and older", "items": ["iPhone 13", "iPhone 12", "iPhone 11", "iPhone XR"] },
-        { "group": "iPhone SE", "items": ["iPhone SE (3rd gen)"] }
-      ],
-      "macbook": [
-        { "group": "MacBook Pro", "items": ["MacBook Pro 14 M3", "MacBook Pro 16 M3 Max"] },
-        { "group": "MacBook Air", "items": ["MacBook Air 13 M3", "MacBook Air 15 M2"] },
-        { "group": "iMac", "items": ["iMac 24 M3"] }
-      ],
-      "ipad": [
-        { "group": "iPad Pro", "items": ["iPad Pro 11 M4", "iPad Pro 13 M4"] },
-        { "group": "iPad Air", "items": ["iPad Air 11 M2", "iPad Air 13 M2"] },
-        { "group": "iPad mini", "items": ["iPad mini 7"] }
-      ],
-      "appleWatch": [
-        { "group": "Apple Watch Ultra", "items": ["Apple Watch Ultra 2"] },
-        { "group": "Apple Watch Series", "items": ["Apple Watch Series 10", "Apple Watch Series 9"] },
-        { "group": "Apple Watch SE", "items": ["Apple Watch SE 2"] }
-      ],
-      "airpods": [
-        { "group": "Headphones", "items": ["AirPods Pro 2", "AirPods 4", "AirPods Max"] }
-      ]
-    }
+    "airpods": "AirPods"
   },
   "nav": {
     "catalog": "All catalog",
@@ -124,6 +97,8 @@
       "outOfStock": "Out of stock",
       "addToCart": "Add to cart",
       "inCart": "In cart",
+      "decrease": "Decrease quantity",
+      "increase": "Increase quantity",
       "wantCheaper": "Want it cheaper",
       "buyOneClick": "Buy in one click"
     },
@@ -151,8 +126,10 @@
       "phoneLabel": "Phone",
       "phonePlaceholder": "+7 (___) ___-__-__",
       "order": "Order",
-      "successTitle": "Request sent!",
+      "orderNumber": "Order number: {{number}}",
+      "successTitle": "Order placed!",
       "successText": "We will call you back shortly to confirm your order.",
+      "error": "Failed to place the order. Please try again.",
       "contactsTitle": "Or give us a call"
     },
     "catalog": {
@@ -177,7 +154,13 @@
       "to": "to",
       "availability": "Availability",
       "inStockOnly": "In stock",
-      "discountOnly": "On sale"
+      "discountOnly": "On sale",
+      "color": "Color",
+      "storage": "Storage",
+      "condition": "Condition",
+      "allColors": "All colors",
+      "allStorages": "Any storage",
+      "allConditions": "Any condition"
     },
     "cart": {
       "title": "Cart",
@@ -187,6 +170,30 @@
       "total": "Total",
       "clear": "Clear",
       "checkout": "Checkout"
+    },
+    "checkout": {
+      "title": "Order checkout",
+      "fullName": "Full name",
+      "fullNamePlaceholder": "John Smith",
+      "phone": "Phone",
+      "phonePlaceholder": "+7 (___) ___-__-__",
+      "email": "Email",
+      "emailPlaceholder": "you@example.com",
+      "address": "Delivery address",
+      "addressPlaceholder": "City, street, building, apartment",
+      "comment": "Comment",
+      "commentPlaceholder": "Order comment (optional)",
+      "payment": "Payment method",
+      "payCard": "Card online",
+      "payCash": "Cash on delivery",
+      "payYandex": "YooMoney",
+      "paySbp": "SBP",
+      "submit": "Place order",
+      "error": "Could not place the order. Check your details and try again.",
+      "successTitle": "Order placed",
+      "successText": "Order {{number}}. We will call you to confirm.",
+      "successToAccount": "Go to my account",
+      "successContinue": "Continue shopping"
     },
     "wishlist": {
       "title": "Favorites"
@@ -234,5 +241,34 @@
     "hours": "From 10:00 to 21:00, 7 days a week",
     "callback": "Request a call",
     "address": "Moscow, Barklaya st., 8"
+  },
+  "auth": {
+    "login": "Sign in",
+    "register": "Create account",
+    "loginTitle": "Sign in",
+    "loginSubtitle": "Sign in to see your orders and wishlist",
+    "registerTitle": "Create an account",
+    "registerSubtitle": "Create an account to place orders and keep your purchase history",
+    "username": "Username",
+    "password": "Password",
+    "confirmPassword": "Repeat password",
+    "email": "Email",
+    "noAccount": "No account yet?",
+    "haveAccount": "Already have an account?",
+    "credentialsError": "Invalid username or password",
+    "registerError": "Registration failed. Please try again",
+    "passwordMismatch": "Passwords do not match",
+    "logout": "Log out",
+    "loginRequired": "Sign in to your account",
+    "loginRequiredHint": "Sign in or create an account to see your orders and personal data"
+  },
+  "account": {
+    "title": "My account",
+    "greeting": "Hello, {{username}}!",
+    "profile": "Profile",
+    "orders": "My orders",
+    "noOrders": "You have no orders yet",
+    "ordersError": "Could not load orders. Please try again later",
+    "cancelOrder": "Cancel"
   }
 }

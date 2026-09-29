@@ -1,7 +1,9 @@
 import { useMemo, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useSearchParams } from "react-router-dom";
-import { categories, getProducts, type Product } from "../data/db";
+import type { Product } from "../data/db";
+import { expandCategorySlugs } from "../utils/categories";
+import { useProducts } from "../context/products";
 import ProductCard from "./Home/ProductCard";
 
 type SortKey = "popular" | "priceAsc" | "priceDesc" | "nameAsc" | "discount";
@@ -12,11 +14,10 @@ const CATEGORY_ALIASES: Record<string, string> = {
   smartphones: "iphone",
   tablets: "ipad",
   computers: "macbook",
-  watches: "appleWatch",
-  watch: "appleWatch",
+  watches: "apple-watch",
+  watch: "apple-watch",
+  appleWatch: "apple-watch",
 };
-
-const categoryKeys = categories.map((c) => c.key);
 
 function sortProducts(list: Product[], sort: SortKey): Product[] {
   const copy = [...list];
@@ -49,6 +50,15 @@ interface FiltersProps {
   onInStockOnlyChange: (v: boolean) => void;
   onSaleOnly: boolean;
   onSaleOnlyChange: (v: boolean) => void;
+  colors: string[];
+  color: string | null;
+  onColorChange: (v: string | null) => void;
+  storages: number[];
+  storage: number | null;
+  onStorageChange: (v: number | null) => void;
+  conditions: { value: string; label: string }[];
+  condition: string | null;
+  onConditionChange: (v: string | null) => void;
   onReset: () => void;
 }
 
@@ -63,6 +73,15 @@ function FiltersSidebar({
   onInStockOnlyChange,
   onSaleOnly,
   onSaleOnlyChange,
+  colors,
+  color,
+  onColorChange,
+  storages,
+  storage,
+  onStorageChange,
+  conditions,
+  condition,
+  onConditionChange,
   onReset,
 }: FiltersProps) {
   const { t } = useTranslation();
@@ -140,6 +159,96 @@ function FiltersSidebar({
         </div>
       </div>
 
+      <div>
+        <h3 className="mb-3 text-sm font-semibold uppercase tracking-wide text-gray-800">
+          {t("pages.catalog.condition")}
+        </h3>
+        <div className="flex flex-col gap-1.5">
+          <label className="flex cursor-pointer items-center gap-2 text-sm text-gray-600">
+            <input
+              type="radio"
+              name="condition"
+              checked={condition === null}
+              onChange={() => onConditionChange(null)}
+              className="h-4 w-4 accent-[#0071E4]"
+            />
+            {t("pages.catalog.allConditions")}
+          </label>
+          {conditions.map((c) => (
+            <label key={c.value} className="flex cursor-pointer items-center gap-2 text-sm text-gray-600">
+              <input
+                type="radio"
+                name="condition"
+                checked={condition === c.value}
+                onChange={() => onConditionChange(c.value)}
+                className="h-4 w-4 accent-[#0071E4]"
+              />
+              {c.label}
+            </label>
+          ))}
+        </div>
+      </div>
+
+      <div>
+        <h3 className="mb-3 text-sm font-semibold uppercase tracking-wide text-gray-800">
+          {t("pages.catalog.color")}
+        </h3>
+        <div className="flex flex-col gap-1.5">
+          <label className="flex cursor-pointer items-center gap-2 text-sm text-gray-600">
+            <input
+              type="radio"
+              name="color"
+              checked={color === null}
+              onChange={() => onColorChange(null)}
+              className="h-4 w-4 accent-[#0071E4]"
+            />
+            {t("pages.catalog.allColors")}
+          </label>
+          {colors.map((c) => (
+            <label key={c} className="flex cursor-pointer items-center gap-2 text-sm text-gray-600">
+              <input
+                type="radio"
+                name="color"
+                checked={color === c}
+                onChange={() => onColorChange(c)}
+                className="h-4 w-4 accent-[#0071E4]"
+              />
+              {c}
+            </label>
+          ))}
+        </div>
+      </div>
+
+      <div>
+        <h3 className="mb-3 text-sm font-semibold uppercase tracking-wide text-gray-800">
+          {t("pages.catalog.storage")}
+        </h3>
+        <div className="flex flex-col gap-1.5">
+          <label className="flex cursor-pointer items-center gap-2 text-sm text-gray-600">
+            <input
+              type="radio"
+              name="storage"
+              checked={storage === null}
+              onChange={() => onStorageChange(null)}
+              className="h-4 w-4 accent-[#0071E4]"
+            />
+            {t("pages.catalog.allStorages")}
+          </label>
+          {storages.map((s) => (
+            <label key={s} className="flex cursor-pointer items-center gap-2 text-sm text-gray-600">
+              <input
+                type="radio"
+                name="storage"
+                checked={storage === s}
+                onChange={() => onStorageChange(s)}
+                className="h-4 w-4 accent-[#0071E4]"
+              />
+              {s} GB
+            </label>
+          ))}
+        </div>
+      </div>
+
       <button
         type="button"
         onClick={onReset}
@@ -154,38 +263,53 @@ function FiltersSidebar({
 export default function Catalog() {
   const { t } = useTranslation();
   const [searchParams] = useSearchParams();
+  const { products: allProducts, facets, categories: apiCategories, categoryTree, loading } = useProducts();
   const [sort, setSort] = useState<SortKey>("popular");
   const [minPrice, setMinPrice] = useState("");
   const [maxPrice, setMaxPrice] = useState("");
   const [inStockOnly, setInStockOnly] = useState(false);
   const [onSaleOnly, setOnSaleOnly] = useState(false);
+  const [color, setColor] = useState<string | null>(null);
+  const [storage, setStorage] = useState<number | null>(null);
+  const [condition, setCondition] = useState<string | null>(null);
   const [filtersOpen, setFiltersOpen] = useState(false);
 
   const categoryParam = useMemo(() => {
     const raw = searchParams.get("category") ?? "";
     const canonical = CATEGORY_ALIASES[raw] ?? raw;
-    return categoryKeys.includes(canonical) ? canonical : "";
-  }, [searchParams]);
+    return apiCategories.some((c) => c.slug === canonical) ? canonical : "";
+  }, [searchParams, apiCategories]);
+
+  const expandedCategorySlugs = useMemo(() => {
+    if (!categoryParam) return null;
+    return expandCategorySlugs(categoryTree, categoryParam);
+  }, [categoryParam, categoryTree]);
 
   const products = useMemo(() => {
     const min = minPrice ? Number(minPrice) : null;
     const max = maxPrice ? Number(maxPrice) : null;
-    const filtered = getProducts().filter((p) => {
-      if (categoryParam && p.category !== categoryParam) return false;
+    const filtered = allProducts.filter((p) => {
+      if (categoryParam && (!expandedCategorySlugs || !p.category || !expandedCategorySlugs.has(p.category))) return false;
       if (inStockOnly && !p.inStock) return false;
       if (onSaleOnly && !(p.oldPrice !== undefined && p.oldPrice > p.price)) return false;
       if (min !== null && p.price < min) return false;
       if (max !== null && p.price > max) return false;
+      if (color && p.color !== color) return false;
+      if (storage !== null && p.storage !== storage) return false;
+      if (condition && p.condition !== condition) return false;
       return true;
     });
     return sortProducts(filtered, sort);
-  }, [sort, minPrice, maxPrice, inStockOnly, onSaleOnly, categoryParam]);
+  }, [sort, minPrice, maxPrice, inStockOnly, onSaleOnly, color, storage, condition, categoryParam, expandedCategorySlugs, allProducts]);
 
   const resetFilters = () => {
     setMinPrice("");
     setMaxPrice("");
     setInStockOnly(false);
     setOnSaleOnly(false);
+    setColor(null);
+    setStorage(null);
+    setCondition(null);
   };
 
   const sidebar = (
@@ -200,6 +324,15 @@ export default function Catalog() {
       onInStockOnlyChange={setInStockOnly}
       onSaleOnly={onSaleOnly}
       onSaleOnlyChange={setOnSaleOnly}
+      colors={facets.colors}
+      color={color}
+      onColorChange={setColor}
+      storages={facets.storages}
+      storage={storage}
+      onStorageChange={setStorage}
+      conditions={facets.conditions}
+      condition={condition}
+      onConditionChange={setCondition}
       onReset={resetFilters}
     />
   );
@@ -267,23 +400,29 @@ export default function Catalog() {
           </aside>
 
           <div className="min-w-0 flex-1">
-            <p className="mb-4 text-sm text-gray-500">
-              {t("pages.catalog.found", { count: products.length })}
-            </p>
-
-            {products.length > 0 ? (
-              <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
-                {products.map((product) => (
-                  <ProductCard key={product.id} product={product} />
-                ))}
-              </div>
+            {loading ? (
+              <p className="py-16 text-center text-sm text-gray-500">{t("common.loading")}</p>
             ) : (
-              <div className="py-16 text-center">
-                <p className="text-[22px] font-semibold text-gray-800">
-                  {categoryParam ? t("pages.catalog.noStock") : t("pages.catalog.empty")}
+              <>
+                <p className="mb-4 text-sm text-gray-500">
+                  {t("pages.catalog.found", { count: products.length })}
                 </p>
-                <p className="mt-2 text-sm text-gray-500">{t("pages.catalog.empty")}</p>
-              </div>
+
+                {products.length > 0 ? (
+                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 xl:grid-cols-3">
+                    {products.map((product) => (
+                      <ProductCard key={product.id} product={product} />
+                    ))}
+                  </div>
+                ) : (
+                  <div className="py-16 text-center">
+                    <p className="text-[22px] font-semibold text-gray-800">
+                      {categoryParam ? t("pages.catalog.noStock") : t("pages.catalog.empty")}
+                    </p>
+                    <p className="mt-2 text-sm text-gray-500">{t("pages.catalog.empty")}</p>
+                  </div>
+                )}
+              </>
             )}
           </div>
         </div>

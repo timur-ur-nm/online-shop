@@ -1,14 +1,16 @@
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, NavLink, useLocation, useParams } from "react-router-dom";
-import { categories } from "../../data/db";
+import { categoryMeta } from "../../data/db";
 import { useCart } from "../../context/cart";
+import { useProducts } from "../../context/products";
 
 export default function BottomNavBar() {
   const { t } = useTranslation();
   const { lang } = useParams();
   const [catalogOpen, setCatalogOpen] = useState(false);
   const { openCart, isOpen: cartOpen } = useCart();
+  const { categoryTree } = useProducts();
   const location = useLocation();
 
   const items = [
@@ -73,17 +75,22 @@ export default function BottomNavBar() {
               </button>
             </div>
             <div className="flex flex-col divide-y divide-gray-100 px-4 py-2">
-              {categories.map(({ key, label, icon }) => (
-                <Link
-                  key={key}
-                  to={`/${lang}/catalog?category=${key}`}
-                  onClick={() => setCatalogOpen(false)}
-                  className="flex items-center gap-2 py-3 text-[15px] font-semibold text-gray-900"
-                >
-                  <img src={icon} alt={t(label)} className="h-5 w-5 object-contain" />
-                  {t(label)}
-                </Link>
-              ))}
+              {categoryTree.map((c) => {
+                const meta = categoryMeta[c.slug];
+                const label = meta ? t(`products.${meta.groupKey}`) : c.name;
+                const icon = c.image ?? meta?.icon;
+                return (
+                  <Link
+                    key={c.slug}
+                    to={`/${lang}/catalog?category=${c.slug}`}
+                    onClick={() => setCatalogOpen(false)}
+                    className="flex items-center gap-2 py-3 text-[15px] font-semibold text-gray-900"
+                  >
+                    {icon && <img src={icon} alt={label} className="h-5 w-5 object-contain" />}
+                    {label}
+                  </Link>
+                );
+              })}
             </div>
         </div>
       )}

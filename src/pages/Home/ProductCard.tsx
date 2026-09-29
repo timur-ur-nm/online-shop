@@ -15,13 +15,12 @@ interface ProductCardProps {
 export default function ProductCard({ product }: ProductCardProps) {
   const { t } = useTranslation();
   const { lang } = useParams();
-  const { addItem } = useCart();
+  const { items, addItem, removeItem, updateQuantity } = useCart();
   const { track } = useRecentlyViewed();
   const [rating, setRating] = useState(0);
   const [hovered, setHovered] = useState(0);
   const [liked, setLiked] = useState(false);
   const [copied, setCopied] = useState(false);
-  const [inCart, setInCart] = useState(false);
   const [buyModalOpen, setBuyModalOpen] = useState(false);
 
   useEffect(() => {
@@ -30,6 +29,8 @@ export default function ProductCard({ product }: ProductCardProps) {
 
   const activeStars = hovered || rating;
   const hasDiscount = product.oldPrice !== undefined && product.oldPrice > product.price;
+  const cartItem = items.find((item) => item.product.id === product.id);
+  const cartQuantity = cartItem?.quantity ?? 0;
 
   const copyLink = async () => {
     try {
@@ -125,14 +126,17 @@ export default function ProductCard({ product }: ProductCardProps) {
       </div>
 
       <Link
-        to={`/${lang}/product/${product.id}`}
+        to={`/${lang}/product/${product.slug ?? product.id}`}
         className="mt-3 line-clamp-2 min-h-10 text-base font-semibold text-gray-900 transition-colors hover:text-[#0071E4]"
       >
         {product.name}
       </Link>
 
       {product.image && (
-        <Link to={`/${lang}/product/${product.id}`} aria-label={product.name}>
+        <Link
+          to={`/${lang}/product/${product.slug ?? product.id}`}
+          aria-label={product.name}
+        >
           <img
             src={product.image}
             alt={product.name}
@@ -159,27 +163,36 @@ export default function ProductCard({ product }: ProductCardProps) {
         </span>
       </div>
 
-      <button
-        type="button"
-        onClick={() => {
-          setInCart((prev) => !prev);
-          addItem(product);
-        }}
-        className={`mt-4 flex w-full items-center justify-center gap-2 rounded-lg py-3 text-base font-semibold text-white transition-colors ${
-          inCart ? "bg-green-500 hover:bg-green-600" : "bg-[#0071E4] hover:bg-[#005bb5]"
-        }`}
-      >
-        {inCart ? (
-          <svg
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-            className="h-5 w-5"
+      {cartQuantity > 0 ? (
+        <div className="mt-4 flex w-full items-center justify-between rounded-lg border border-[#0071E4]">
+          <button
+            type="button"
+            aria-label={t("pages.productCard.decrease")}
+            onClick={() =>
+              cartQuantity === 1
+                ? removeItem(product.id)
+                : updateQuantity(product.id, cartQuantity - 1)
+            }
+            className="flex h-11 w-12 items-center justify-center text-2xl font-semibold text-[#0071E4] transition-colors hover:bg-blue-50"
           >
-            <path d="M20 6 9 17l-5-5" />
-          </svg>
-        ) : (
+            −
+          </button>
+          <span className="text-base font-semibold text-gray-900">{cartQuantity}</span>
+          <button
+            type="button"
+            aria-label={t("pages.productCard.increase")}
+            onClick={() => updateQuantity(product.id, cartQuantity + 1)}
+            className="flex h-11 w-12 items-center justify-center text-2xl font-semibold text-[#0071E4] transition-colors hover:bg-blue-50"
+          >
+            +
+          </button>
+        </div>
+      ) : (
+        <button
+          type="button"
+          onClick={() => addItem(product)}
+          className="mt-4 flex w-full items-center justify-center gap-2 rounded-lg bg-[#0071E4] py-3 text-base font-semibold text-white transition-colors hover:bg-[#005bb5]"
+        >
           <svg
             viewBox="0 0 24 24"
             fill="none"
@@ -191,9 +204,9 @@ export default function ProductCard({ product }: ProductCardProps) {
             <circle cx="10" cy="21" r="1" />
             <circle cx="19" cy="21" r="1" />
           </svg>
-        )}
-        {t(inCart ? "pages.productCard.inCart" : "pages.productCard.addToCart")}
-      </button>
+          {t("pages.productCard.addToCart")}
+        </button>
+      )}
 
       <div className="mt-3 flex flex-wrap items-center justify-between gap-2 text-sm">
         <button

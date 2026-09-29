@@ -1,18 +1,32 @@
+import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
 import { useCart } from "../../context/cart";
+import { useAuth } from "../../context/auth";
+import CheckoutModal from "./CheckoutModal";
 
 export default function CartModal() {
   const { t } = useTranslation();
   const { lang } = useParams();
   const navigate = useNavigate();
   const { items, isOpen, closeCart, removeItem, clear, total, count } = useCart();
+  const { isAuthenticated } = useAuth();
+  const [checkoutOpen, setCheckoutOpen] = useState(false);
 
   if (!isOpen) return null;
 
   const goToCatalog = () => {
     closeCart();
     navigate(`/${lang}/catalog`);
+  };
+
+  const handleCheckout = () => {
+    if (!isAuthenticated) {
+      closeCart();
+      navigate(`/${lang}/login`);
+      return;
+    }
+    setCheckoutOpen(true);
   };
 
   return (
@@ -109,6 +123,7 @@ export default function CartModal() {
                   </button>
                   <button
                     type="button"
+                    onClick={handleCheckout}
                     className="rounded-lg bg-[#0071E4] px-4 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-[#005bb5] md:px-6 md:py-3"
                   >
                     {t("pages.cart.checkout")}
@@ -119,6 +134,7 @@ export default function CartModal() {
           </div>
         )}
       </div>
+      <CheckoutModal isOpen={checkoutOpen} onClose={() => setCheckoutOpen(false)} />
     </div>
   );
 }

@@ -1,24 +1,25 @@
 import { useTranslation } from "react-i18next";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import burgerdots from '../../assets/icons/burger.png'
-import { categories } from "../../data/db";
+import { categoryMeta } from "../../data/db";
 import { useCart } from "../../context/cart";
+import { useProducts } from "../../context/products";
+import { computeCategoryCounts } from "../../utils/categories";
 import SearchResultsPanel from "../search/SearchResultsPanel";
-
-interface ItemGroup {
-  group: string;
-  items: string[];
-}
 
 export default function SearchBar() {
   const { t } = useTranslation();
   const { lang } = useParams();
   const { openCart } = useCart();
+  const { products, categoryTree } = useProducts();
+  const categoryCounts = useMemo(
+    () => computeCategoryCounts(categoryTree, products),
+    [categoryTree, products]
+  );
   const [searchQuery, setSearchQuery] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [isSearchFocused, setIsSearchFocused] = useState(false);
-  const [activeGroup, setActiveGroup] = useState<Record<string, number>>({});
   const dropdownRef = useRef<HTMLDivElement>(null);
   const searchRef = useRef<HTMLDivElement>(null);
 
@@ -74,21 +75,21 @@ export default function SearchBar() {
               </p>
               <div className="h-px bg-gray-100" />
               <div className="py-1">
-                {categories.map(({ key, label, icon }) => {
-                  const to = `/${lang}/catalog?category=${key}`;
-                  const groups = t(`products.items.${key}`, { returnObjects: true }) as ItemGroup[];
-                  const current = groups.length > 0 ? Math.min(activeGroup[key] ?? 0, groups.length - 1) : 0;
-                  const currentGroup = groups.length > 0 ? groups[current] : null;
+                {categoryTree.map((cat) => {
+                  const meta = categoryMeta[cat.slug];
+                  const label = meta ? t(`products.${meta.groupKey}`) : cat.name;
+                  const icon = cat.image ?? meta?.icon;
+                  const rootLink = `/${lang}/catalog?category=${cat.slug}`;
                   return (
-                    <div key={key} className="group relative">
+                    <div key={cat.slug} className="group relative">
                       <Link
-                        to={to}
+                        to={rootLink}
                         onClick={() => setIsDropdownOpen(false)}
                         className="flex items-center justify-between gap-2 rounded-lg px-3 py-2.5 text-sm text-gray-700 transition-colors group-hover:bg-blue-50 group-hover:text-[#0071E4]"
                       >
                         <span className="flex items-center gap-2">
-                          <img src={icon} alt={t(label)} className="h-5 w-5 object-contain" />
-                          {t(label)}
+                          {icon && <img src={icon} alt={label} className="h-5 w-5 object-contain" />}
+                          {label}
                         </span>
                         <svg
                           viewBox="0 0 24 24"
@@ -101,57 +102,49 @@ export default function SearchBar() {
                         </svg>
                       </Link>
 
-                      <div className="pointer-events-none absolute left-full top-0 z-[60] hidden w-[460px] max-w-[calc(100vw-360px)] rounded-md border border-gray-100 bg-white opacity-0 shadow-xl transition-opacity duration-150 group-hover:pointer-events-auto group-hover:flex group-hover:opacity-100">
-                        <div className="flex w-full">
-                          <div className="w-48 shrink-0 border-r border-gray-100 p-2">
-                            {groups.map((group, i) => (
-                              <button
-                                key={group.group}
-                                type="button"
-                                onMouseEnter={() => setActiveGroup((prev) => ({ ...prev, [key]: i }))}
-                                className={`flex w-full items-center justify-between gap-2 rounded px-3 py-2 text-left text-sm transition-colors ${
-                                  i === current
-                                    ? "bg-blue-50 font-medium text-[#0071E4]"
-                                    : "text-gray-700 hover:bg-gray-50 hover:text-[#0071E4]"
-                                }`}
-                              >
-                                {group.group}
-                                <svg
-                                  viewBox="0 0 24 24"
-                                  fill="none"
-                                  stroke="currentColor"
-                                  strokeWidth="2"
-                                  className={`h-4 w-4 shrink-0 ${
-                                    i === current ? "text-[#0071E4]" : "text-gray-300"
-                                  }`}
+                      <div className="pointer-events-none absolute left-full top-0 z-[60] hidden w-[340px] rounded-md border border-gray-100 bg-white p-2 opacity-0 shadow-xl transition-opacity duration-150 group-hover:pointer-events-auto group-hover:block group-hover:opacity-100">
+                        <Link
+                          to={rootLink}
+                          onClick={() => setIsDropdownOpen(false)}
+                          className="flex items-center justify-between px-3 py-2 text-sm font-semibold text-[#0071E4] transition-colors hover:bg-blue-50 hover:text-[#005bb5]"
+                        >
+                          {t("header.allProducts")}
+                          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4">
+                            <path d="m9 18 6-6-6-6" />
+                          </svg>
+                        </Link>
+                        <div className="h-px bg-gray-100" />
+                        <div className="scrollbar-thin max-h-[300px] overflow-y-auto py-1">
+                          {cat.children.length > 0 ? (
+                            cat.children.map((child) => {
+                              const childMeta = categoryMeta[child.slug];
+                              const childLabel = childMeta ? t(`products.${childMeta.groupKey}`) : child.name;
+                              const childIcon = child.image ?? childMeta?.icon;
+                              return (
+                                <Link
+                                  key={child.slug}
+                                  to={`/${lang}/catalog?category=${child.slug}`}
+                                  onClick={() => setIsDropdownOpen(false)}
+                                  className="flex items-center justify-between gap-2 rounded-lg px-3 py-2 text-sm text-gray-700 transition-colors hover:bg-blue-50 hover:text-[#0071E4]"
                                 >
-                                  <path d="m9 18 6-6-6-6" />
-                                </svg>
-                              </button>
-                            ))}
-                          </div>
-                          <div className="scrollbar-thin max-h-[300px] min-h-0 flex-1 overflow-y-auto p-2">
-                            {currentGroup && (
-                              <>
-                                <p className="px-3 pb-2 pt-1 text-xs font-semibold uppercase tracking-wide text-gray-400">
-                                  {currentGroup.group}
-                                </p>
-                                <div className="h-px bg-gray-100" />
-                                <div className="py-1">
-                                  {currentGroup.items.map((item) => (
-                                    <Link
-                                      key={item}
-                                      to={to}
-                                      onClick={() => setIsDropdownOpen(false)}
-                                      className="block rounded-lg px-3 py-2 text-sm text-gray-700 transition-colors hover:bg-blue-50 hover:text-[#0071E4]"
-                                    >
-                                      {item}
-                                    </Link>
-                                  ))}
-                                </div>
-                              </>
-                            )}
-                          </div>
+                                  <span className="flex min-w-0 items-center gap-2">
+                                    {childIcon && <img src={childIcon} alt={childLabel} className="h-5 w-5 shrink-0 object-contain" />}
+                                    <span className="truncate">{childLabel}</span>
+                                  </span>
+                                  {(() => {
+                                    const count = categoryCounts.get(child.slug) ?? 0;
+                                    return count > 0 ? (
+                                      <span className="shrink-0 rounded-full bg-gray-100 px-2 py-0.5 text-xs text-gray-500">
+                                        {count}
+                                      </span>
+                                    ) : null;
+                                  })()}
+                                </Link>
+                              );
+                            })
+                          ) : (
+                            <p className="px-3 py-2 text-sm text-gray-400">{t("header.noSubcategories")}</p>
+                          )}
                         </div>
                       </div>
                     </div>
@@ -189,6 +182,17 @@ export default function SearchBar() {
         </div>
 
         <div className="flex shrink-0 items-center gap-2">
+          <Link
+            to="account"
+            aria-label={t("header.account")}
+            className="flex items-center gap-2 rounded bg-gray-100 px-3 py-3 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-200 md:px-4"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4">
+              <circle cx="12" cy="8" r="4" />
+              <path d="M4 20c1.5-3.5 4.5-5 8-5s6.5 1.5 8 5" />
+            </svg>
+            <span className="hidden md:inline">{t("header.account")}</span>
+          </Link>
           <Link
             to="wishlist"
             aria-label={t("header.wishlist")}
