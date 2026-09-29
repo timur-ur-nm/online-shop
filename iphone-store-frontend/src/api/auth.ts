@@ -79,6 +79,50 @@ export async function fetchMe(token: string | null): Promise<AuthUser> {
   return res.json() as Promise<AuthUser>;
 }
 
+export interface ProfileData {
+  username: string;
+  email: string;
+  first_name: string;
+  last_name: string;
+}
+
+export async function updateProfile(data: ProfileData): Promise<AuthUser> {
+  const res = await authFetch("/auth/me/", {
+    method: "PATCH",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+  if (!res.ok) {
+    const body = await res.json().catch(() => null);
+    const error = new Error(`API error ${res.status}`) as Error & { data?: unknown };
+    error.data = body;
+    throw error;
+  }
+  return res.json() as Promise<AuthUser>;
+}
+
+export async function changePassword(
+  oldPassword: string,
+  newPassword: string,
+  newPasswordConfirm: string
+): Promise<void> {
+  const res = await authFetch("/auth/change-password/", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      old_password: oldPassword,
+      new_password: newPassword,
+      new_password_confirm: newPasswordConfirm,
+    }),
+  });
+  if (!res.ok) {
+    const body = await res.json().catch(() => null);
+    const error = new Error(`API error ${res.status}`) as Error & { data?: unknown };
+    error.data = body;
+    throw error;
+  }
+}
+
 async function refreshAccess(): Promise<string | null> {
   const refresh = getRefreshToken();
   if (!refresh) return null;

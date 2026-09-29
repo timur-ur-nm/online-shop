@@ -10,7 +10,8 @@ from rest_framework_simplejwt.views import TokenRefreshView
 from cart.views import CartItemViewSet
 from config.health import HealthView
 from config.jwt import StoreTokenObtainPairView
-from config.views import MeView, RegisterView
+from config.views import ChangePasswordView, MeView, RegisterView
+from feedback.views import FeedbackMessageCreateView, SubscriberCreateView
 from orders.views import OrderViewSet
 from products.views import BrandViewSet, CategoryViewSet, ProductViewSet
 
@@ -37,6 +38,21 @@ urlpatterns = [
     ),
     path("auth/token/refresh/", TokenRefreshView.as_view(), name="token_refresh"),
     path("auth/me/", MeView.as_view(), name="me"),
+    path(
+        "auth/change-password/",
+        ChangePasswordView.as_view(),
+        name="change_password",
+    ),
+    path(
+        "feedback/subscribe/",
+        SubscriberCreateView.as_view(),
+        name="feedback-subscribe",
+    ),
+    path(
+        "feedback/messages/",
+        FeedbackMessageCreateView.as_view(),
+        name="feedback-messages",
+    ),
     path("schema/", SpectacularAPIView.as_view(), name="schema"),
     path(
         "docs/",

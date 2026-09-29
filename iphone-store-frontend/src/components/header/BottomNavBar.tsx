@@ -2,15 +2,20 @@ import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Link, NavLink, useLocation, useParams } from "react-router-dom";
 import { categoryMeta } from "../../data/db";
+import { categoryImage } from "../../api/client";
 import { useCart } from "../../context/cart";
 import { useProducts } from "../../context/products";
+import { useWishlist } from "../../context/wishlist";
+import { useCompare } from "../../context/compare";
 
 export default function BottomNavBar() {
   const { t } = useTranslation();
   const { lang } = useParams();
   const [catalogOpen, setCatalogOpen] = useState(false);
-  const { openCart, isOpen: cartOpen } = useCart();
+  const { openCart, isOpen: cartOpen, count: cartCount } = useCart();
   const { categoryTree } = useProducts();
+  const { count: wishlistCount } = useWishlist();
+  const { count: compareCount } = useCompare();
   const location = useLocation();
 
   const items = [
@@ -78,7 +83,7 @@ export default function BottomNavBar() {
               {categoryTree.map((c) => {
                 const meta = categoryMeta[c.slug];
                 const label = meta ? t(`products.${meta.groupKey}`) : c.name;
-                const icon = c.image ?? meta?.icon;
+                const icon = c.image ?? categoryImage(c.slug) ?? meta?.icon;
                 return (
                   <Link
                     key={c.slug}
@@ -127,7 +132,14 @@ export default function BottomNavBar() {
                     cartOpen ? "text-[#0071E4]" : "text-gray-600"
                   }`}
                 >
-                  {icon}
+                  <span className="relative">
+                    {icon}
+                    {cartCount > 0 && (
+                      <span className="absolute -right-2.5 -top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-[#0071E4] px-1 text-[10px] font-bold text-white">
+                        {cartCount}
+                      </span>
+                    )}
+                  </span>
                   {label}
                 </button>
               );
@@ -143,7 +155,19 @@ export default function BottomNavBar() {
                   }`
                 }
               >
-                {icon}
+                <span className="relative">
+                  {icon}
+                  {to === "wishlist" && wishlistCount > 0 && (
+                    <span className="absolute -right-2.5 -top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-[#0071E4] px-1 text-[10px] font-bold text-white">
+                      {wishlistCount}
+                    </span>
+                  )}
+                  {to === "compare" && compareCount > 0 && (
+                    <span className="absolute -right-2.5 -top-1.5 flex h-4 min-w-4 items-center justify-center rounded-full bg-gray-800 px-1 text-[10px] font-bold text-white">
+                      {compareCount}
+                    </span>
+                  )}
+                </span>
                 {label}
               </NavLink>
             );

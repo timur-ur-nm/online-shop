@@ -1,5 +1,5 @@
 import { createContext, useContext } from "react";
-import type { AuthUser } from "../api/auth";
+import type { AuthUser, ProfileData } from "../api/auth";
 
 export interface AuthContextValue {
   isAuthenticated: boolean;
@@ -10,6 +10,8 @@ export interface AuthContextValue {
   register: (username: string, email: string, password: string) => Promise<void>;
   logout: () => void;
   refreshProfile: () => Promise<void>;
+  updateProfile: (data: ProfileData) => Promise<AuthUser>;
+  changePassword: (oldPassword: string, newPassword: string, confirm: string) => Promise<void>;
 }
 
 export const AuthContext = createContext<AuthContextValue | null>(null);

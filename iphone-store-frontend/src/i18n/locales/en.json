@@ -2,7 +2,8 @@
   "common": {
     "footer": "Footer",
     "home": "Home",
-    "loading": "Loading..."
+    "loading": "Loading...",
+    "ok": "Done"
   },
   "header": {
     "city": "City",
@@ -84,7 +85,10 @@
       "subtitle": "Stay informed about best deals",
       "discount": "10% discount",
       "placeholder": "Enter your email",
-      "subscribe": "Subscribe"
+      "subscribe": "Subscribe",
+      "success": "You're in! 10% off your first order is yours.",
+      "error": "Couldn't subscribe. Try again.",
+      "invalid": "Please enter a valid email"
     },
     "homeBanner": {
       "title": "iPhone 14 Pro Max",
@@ -131,6 +135,16 @@
       "successText": "We will call you back shortly to confirm your order.",
       "error": "Failed to place the order. Please try again.",
       "contactsTitle": "Or give us a call"
+    },
+    "wantCheaper": {
+      "title": "Want it cheaper",
+      "subtitle": "Leave your phone number — we'll offer our best price and call you back",
+      "phoneLabel": "Phone",
+      "phonePlaceholder": "+7 (___) ___-__-__",
+      "submit": "Send request",
+      "successTitle": "Request sent!",
+      "successText": "We'll contact you soon with a better offer.",
+      "error": "Couldn't send the request. Try again."
     },
     "catalog": {
       "title": "All catalog",
@@ -196,34 +210,286 @@
       "successContinue": "Continue shopping"
     },
     "wishlist": {
-      "title": "Favorites"
+      "title": "Favorites",
+      "emptyTitle": "No favorites yet",
+      "emptyText": "Tap the heart on products you like and they will be saved here.",
+      "goCatalog": "Go to catalog",
+      "count": "Items: {{count}}",
+      "clear": "Clear favorites"
     },
     "compare": {
-      "title": "Comparison"
+      "title": "Compare products",
+      "emptyTitle": "Comparison list is empty",
+      "emptyText": "Add up to 4 products from the catalog to compare their specs.",
+      "goCatalog": "Go to catalog",
+      "limitReached": "You can compare at most 4 products",
+      "clear": "Clear list",
+      "addToCompare": "Compare",
+      "inCompare": "In comparison",
+      "product": "Product",
+      "price": "Price",
+      "availability": "Availability",
+      "condition": "Condition",
+      "storage": "Storage",
+      "remove": "Remove"
     },
     "sales": {
-      "title": "Sales"
+      "title": "Sales",
+      "subtitle": "Discounts, installments and great deals every week",
+      "note": "Prices are valid until the end of the week or until stock runs out.",
+      "cards": [
+        {
+          "title": "iPhone 15 — 10% off",
+          "text": "Get 10% off the latest iPhone models when you order online or by phone. The price is final, with no hidden markups."
+        },
+        {
+          "title": "iPhone 15 Pro Max + free case",
+          "text": "When you buy a flagship model, we give you an original Apple case as a gift plus free device setup."
+        },
+        {
+          "title": "Free delivery",
+          "text": "Free delivery in Moscow for orders over 50 000 ₽. Across Russia — 50% off delivery."
+        },
+        {
+          "title": "Trade-in up to 30 000 ₽",
+          "text": "Trade in your old smartphone and get up to 30 000 ₽ off a new iPhone. Evaluation takes 10 minutes."
+        },
+        {
+          "title": "0% installments",
+          "text": "Buy Apple gear in installments with no extra cost for 6 and 12 months. No down payment, no hidden fees."
+        },
+        {
+          "title": "5% cashback with store card",
+          "text": "Get a loyal customer card and earn 5% cashback on every purchase to spend on future orders."
+        },
+        {
+          "title": "AirPods bundle deal",
+          "text": "Buy an iPhone and a MacBook together and get 20% off any AirPods."
+        },
+        {
+          "title": "5% student discount",
+          "text": "Show your student ID or university certificate and get 5% off Apple devices."
+        }
+      ],
+      "tradeInTitle": "How trade-in works",
+      "tradeInText": "We accept iPhone, iPad and MacBook in any condition. Evaluation takes no more than 10 minutes and the amount is credited instantly:",
+      "tradeInSteps": [
+        "Bring your device to our store or select it in the application form on the website.",
+        "An engineer checks the condition: case, screen, battery, functionality.",
+        "You receive the evaluation amount immediately as a discount towards a new iPhone."
+      ],
+      "faqTitle": "Sales FAQ",
+      "faq": [
+        {
+          "title": "Can I combine promotions?",
+          "text": "Yes, promotional discounts stack with store card cashback and trade-in. Promo codes are the only exception."
+        },
+        {
+          "title": "How do I know if a promotion is still active?",
+          "text": "The validity period is shown on the promo banner. If it expired but stock remains, call us — we may extend the offer just for you."
+        },
+        {
+          "title": "Do promotions apply to installments?",
+          "text": "Yes. 0% installments are available on discounted items for orders from 10 000 ₽."
+        },
+        {
+          "title": "I subscribed to the newsletter — how do I get the promo code?",
+          "text": "The promo code arrives by email within an hour after subscribing. It is valid for 14 days and gives 10% off your first order."
+        }
+      ]
     },
     "warranty": {
-      "title": "Warranty"
+      "title": "Warranty",
+      "lead": "1-year warranty",
+      "paragraphs": [
+        "When you purchase any phone from our store, you get a full one-year warranty from a specialized service center.",
+        "We care about supplying quality products, so we strictly follow the Russian Government Resolution 'On approval of the Rules for the sale of certain types of goods...'.",
+        "Under the warranty terms, every customer may return a phone or hand it in for repair provided the factory seals are untouched. More detailed conditions are listed below.",
+        "Before dispatching every order we carefully inspect and test each device, so the chances of customers receiving a defective item are minimized. We do not allow devices with the slightest defect to be sold.",
+        "Enjoy your pleasant shopping!"
+      ],
+      "goShopping": "Go to shopping",
+      "accordionTitle": "Warranty terms",
+      "accordion": [
+        {
+          "title": "Return and repair",
+          "text": "Every customer may return a phone or hand it in for repair provided the factory seals are untouched. We resolve all warranty issues within 1–3 days after free diagnostics."
+        },
+        {
+          "title": "What the warranty does not cover",
+          "text": "Mechanical damage, traces of liquid contact, and repairs outside an authorized service center are not warranty cases."
+        },
+        {
+          "title": "How to use the warranty",
+          "text": "Call us or write in the chat, bring the device with the receipt, and we will run free diagnostics within 24 hours and resolve the issue."
+        }
+      ]
     },
     "returnPolicy": {
-      "title": "Return policy"
+      "title": "Company return policy",
+      "lead": "Any device can be exchanged or returned within 14 days",
+      "sections": [
+        {
+          "title": "Return of goods of inadequate quality",
+          "paragraphs": [
+            "If a customer has purchased a product of inadequate quality, they have the right to demand from the seller: free elimination of all defects or payment for repairs performed by another service center; a price reduction proportionate to the defect; replacement with an equivalent device, or a product of another model or brand taking into account the difference in price.",
+            "It should be noted that such customer requirements for expensive and complex goods may be satisfied only if the defects are significant.",
+            "The customer may refuse repair, price reduction and replacement by returning the defective product and receiving back the full amount paid for it.",
+            "If defects caused any losses, the customer has the right to demand compensation. In this case the Law 'On Protection of Consumer Rights' must be followed and compensation must be made within the statutory time limits.",
+            "If the seller refuses to hand over the goods, the customer may demand compensation for losses. The seller must return the full price of the goods within 10 days of receiving written claims.",
+            "If the customer has no documents confirming the purchase, this does not deprive them of the right to prove the sale transaction by any legal means.",
+            "If defects are found in a technically complex expensive product, the customer is entitled to withdraw from the purchase or demand replacement with an equivalent device. When replacing with a device of another brand or model, the price must be recalculated. Such a transaction can be made within fifteen days, but the seller must first receive the goods for inspection and confirmation of the defects.",
+            "The full list of technically complex goods can be found in the relevant Russian Government Resolution No. 924.",
+            "If a gift was included with the product, the customer must return it as well when returning a defective product, keeping it in marketable condition.",
+            "All inspections are carried out in accordance with legislation, within the statutory time limits, taking into account customer requirements and the warranty obligations of the seller or manufacturer. Only specialized accredited service centers may conduct an inspection. Without such an inspection the seller cannot confirm the defect, its causes, or justify the customer's claims, and therefore cannot be held responsible for delay until the product is handed over.",
+            "If the inspection establishes that the defects were caused by the customer's careless handling of the device, the customer is obliged to reimburse the costs of transportation and the expert examination."
+          ]
+        },
+        {
+          "title": "Return of goods of adequate quality",
+          "paragraphs": [
+            "Returning a product of adequate quality is possible under certain conditions: the availability of documents confirming the purchase. If the relevant document is missing, the customer may make a return by proving the purchase by any other means.",
+            "If the device has individual features and is intended for use exclusively by a specific consumer, the customer cannot make a return.",
+            "If the customer refuses the purchase, the seller must reimburse the full amount paid, excluding transport costs. Review period in accordance with Article 22 — 10 days.",
+            "If a gift was included with the product, the customer must return it, keeping it in marketable condition and properties.",
+            "When processing a return, the customer (or their representative) and the seller sign a document recording the transaction and containing the following information: the seller's name; the customer's full name; the product name; the date of the transaction; the amount the seller undertakes to refund."
+          ]
+        }
+      ]
     },
     "credit": {
-      "title": "Credit"
+      "title": "Credit and installments",
+      "intro": "Buy iPhone, MacBook and iPad in installments or on credit.",
+      "items": [
+        {
+          "title": "0% installments",
+          "text": "For 6 and 12 months with no extra cost and no down payment."
+        },
+        {
+          "title": "Credit from 3 months",
+          "text": "Credit terms from 3 to 24 months."
+        },
+        {
+          "title": "Partner banks",
+          "text": "Tinkoff, Alfa-Bank, Sberbank."
+        },
+        {
+          "title": "Approved in 15 minutes",
+          "text": "Decision on your application online without visiting a bank."
+        }
+      ],
+      "stepsTitle": "How to apply",
+      "steps": [
+        "Choose a product in the catalog.",
+        "Submit an application on the site or in the store.",
+        "Get approved and pick up your device."
+      ]
     },
     "deliveryPayment": {
-      "title": "Delivery & payment"
+      "title": "Delivery & payment",
+      "intro": "We deliver orders across Moscow and all of Russia.",
+      "deliveryTitle": "Delivery",
+      "deliveryItems": [
+        {
+          "title": "Pickup — free",
+          "text": "Moscow, Barklaya st., 8, daily from 10:00 to 21:00."
+        },
+        {
+          "title": "Delivery in Moscow",
+          "text": "Courier in 1–2 days, free for orders over 50 000 ₽."
+        },
+        {
+          "title": "Delivery across Russia",
+          "text": "Russian Post and CDEK, delivery in 3–7 days."
+        }
+      ],
+      "paymentTitle": "Payment",
+      "paymentItems": [
+        {
+          "title": "Cash or card",
+          "text": "On delivery or in our store."
+        },
+        {
+          "title": "Online",
+          "text": "By bank card on the website."
+        },
+        {
+          "title": "SBP",
+          "text": "Quick payment system with no commission."
+        }
+      ]
     },
     "reviews": {
-      "title": "Reviews"
+      "title": "Reviews",
+      "intro": "More than 5 000 customers already shop with us.",
+      "cards": [
+        {
+          "name": "Alexey",
+          "text": "Ordered an iPhone 15. It was delivered the next day, everything original, and they helped transfer my data."
+        },
+        {
+          "name": "Maria",
+          "text": "Bought a MacBook Air. Fast checkout, the manager explained everything in detail. Thank you!"
+        },
+        {
+          "name": "Dmitry",
+          "text": "Installments with no extra cost — just as promised. I will recommend this store to my friends."
+        },
+        {
+          "name": "Svetlana",
+          "text": "They gave me a trade-in discount and a free case as a gift. Pleasantly surprised by the service."
+        },
+        {
+          "name": "Ivan",
+          "text": "The return was processed without unnecessary questions and the money was refunded quickly. I trust this store."
+        }
+      ]
     },
     "contacts": {
-      "title": "Contacts"
+      "title": "Contacts",
+      "intro": "We are always in touch and ready to help you choose.",
+      "phoneLabel": "Phone",
+      "addressLabel": "Address",
+      "hoursLabel": "Working hours",
+      "emailLabel": "E-mail",
+      "email": "shop@example.com",
+      "formTitle": "Write to us",
+      "formText": "Fill in the form and we'll reply within one business day.",
+      "name": "Your name",
+      "namePlaceholder": "John",
+      "phone": "Phone",
+      "phonePlaceholder": "+7 (___) ___-__-__",
+      "message": "Message",
+      "messagePlaceholder": "Your question or message",
+      "send": "Send",
+      "formSuccess": "Message sent! We'll get back to you soon.",
+      "formError": "Couldn't send the message. Try again."
     },
     "privacy": {
-      "title": "Privacy policy"
+      "title": "Privacy policy",
+      "intro": "We respect your privacy and protect your personal data.",
+      "sections": [
+        {
+          "title": "What data we collect",
+          "text": "Name, phone, e-mail and delivery address that you leave when placing an order."
+        },
+        {
+          "title": "How we use it",
+          "text": "To process orders, arrange delivery and contact you."
+        },
+        {
+          "title": "Data sharing",
+          "text": "We do not share data with third parties except delivery and payment services."
+        },
+        {
+          "title": "Storage and protection",
+          "text": "Data is stored on protected servers and processed under law 152-FZ."
+        },
+        {
+          "title": "Your rights",
+          "text": "You can request a change or deletion of your data at any time."
+        }
+      ]
     },
     "products": {
       "iphone": "iPhone",
@@ -265,10 +531,57 @@
   "account": {
     "title": "My account",
     "greeting": "Hello, {{username}}!",
+    "greetingShort": "Hello!",
     "profile": "Profile",
     "orders": "My orders",
     "noOrders": "You have no orders yet",
+    "ordersEmptyTitle": "No orders yet",
+    "ordersEmptyText": "Browse the catalog and choose a product you like",
     "ordersError": "Could not load orders. Please try again later",
-    "cancelOrder": "Cancel"
+    "retry": "Retry",
+    "cancelOrder": "Cancel",
+    "cancelConfirm": "Cancel order?",
+    "confirm": "Confirm",
+    "editProfile": "Edit profile",
+    "save": "Save",
+    "saving": "Saving…",
+    "saved": "Data saved",
+    "saveError": "Could not save data",
+    "changePassword": "Change password",
+    "passwordTitle": "Security",
+    "oldPassword": "Current password",
+    "newPassword": "New password",
+    "confirmPassword": "Repeat the new password",
+    "passwordHint": "At least 8 characters: letters, numbers and symbols",
+    "passwordChanged": "Password changed",
+    "passwordError": "Could not change password",
+    "showPassword": "Show password",
+    "hidePassword": "Hide password",
+    "firstName": "First name",
+    "lastName": "Last name",
+    "personalData": "Personal data",
+    "links": "Sections",
+    "ordersLink": "Orders",
+    "orderNotFound": "Order not found",
+    "orderStatus": "Status",
+    "orderDate": "Date",
+    "orderTotal": "Order total",
+    "orderItems": "{{count}} items",
+    "status": {
+      "new": "New",
+      "confirmed": "Confirmed",
+      "shipped": "Shipped",
+      "delivered": "Delivered",
+      "cancelled": "Cancelled"
+    },
+    "wishlistHint": "Saved products",
+    "compareHint": "Products in comparison",
+    "stats": {
+      "favorites": "Favorites",
+      "compare": "Comparison",
+      "orders": "Orders"
+    },
+    "emptyProfile": "Fill in your contact details so we can process your orders faster",
+    "member": "Loyal customer"
   }
 }

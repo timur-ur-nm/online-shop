@@ -5,6 +5,7 @@ export interface ApiOrderItem {
   id?: number;
   product?: number;
   product_name?: string;
+  name?: string;
   product_slug?: string;
   quantity?: number;
   price?: string;

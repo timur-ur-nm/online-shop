@@ -1,6 +1,7 @@
 import { useTranslation } from "react-i18next";
 import { Link, useParams } from "react-router-dom";
 import { categoryMeta } from "../../data/db";
+import { categoryImage } from "../../api/client";
 import { useProducts } from "../../context/products";
 
 export default function ProductsBar() {
@@ -15,7 +16,7 @@ export default function ProductsBar() {
           {categoryTree.map((c) => {
             const meta = categoryMeta[c.slug];
             const label = meta ? t(`products.${meta.groupKey}`) : c.name;
-            const icon = c.image ?? meta?.icon;
+            const icon = c.image ?? categoryImage(c.slug) ?? meta?.icon;
             return (
               <Link
                 key={c.slug}

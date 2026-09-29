@@ -11,8 +11,11 @@ export interface CartContextValue {
   isOpen: boolean;
   count: number;
   total: number;
+  checkoutOpen: boolean;
   openCart: () => void;
   closeCart: () => void;
+  openCheckout: () => void;
+  closeCheckout: () => void;
   addItem: (product: Product, quantity?: number) => Promise<void>;
   removeItem: (id: string) => Promise<void>;
   updateQuantity: (id: string, quantity: number) => Promise<void>;

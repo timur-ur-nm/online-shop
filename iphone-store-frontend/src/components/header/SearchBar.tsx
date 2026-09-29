@@ -3,16 +3,21 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import burgerdots from '../../assets/icons/burger.png'
 import { categoryMeta } from "../../data/db";
+import { categoryImage } from "../../api/client";
 import { useCart } from "../../context/cart";
 import { useProducts } from "../../context/products";
+import { useWishlist } from "../../context/wishlist";
+import { useCompare } from "../../context/compare";
 import { computeCategoryCounts } from "../../utils/categories";
 import SearchResultsPanel from "../search/SearchResultsPanel";
 
 export default function SearchBar() {
   const { t } = useTranslation();
   const { lang } = useParams();
-  const { openCart } = useCart();
+  const { openCart, count: cartCount } = useCart();
   const { products, categoryTree } = useProducts();
+  const { count: wishlistCount } = useWishlist();
+  const { count: compareCount } = useCompare();
   const categoryCounts = useMemo(
     () => computeCategoryCounts(categoryTree, products),
     [categoryTree, products]
@@ -78,7 +83,7 @@ export default function SearchBar() {
                 {categoryTree.map((cat) => {
                   const meta = categoryMeta[cat.slug];
                   const label = meta ? t(`products.${meta.groupKey}`) : cat.name;
-                  const icon = cat.image ?? meta?.icon;
+                  const icon = cat.image ?? categoryImage(cat.slug) ?? meta?.icon;
                   const rootLink = `/${lang}/catalog?category=${cat.slug}`;
                   return (
                     <div key={cat.slug} className="group relative">
@@ -119,7 +124,7 @@ export default function SearchBar() {
                             cat.children.map((child) => {
                               const childMeta = categoryMeta[child.slug];
                               const childLabel = childMeta ? t(`products.${childMeta.groupKey}`) : child.name;
-                              const childIcon = child.image ?? childMeta?.icon;
+                              const childIcon = child.image ?? categoryImage(child.slug) ?? childMeta?.icon;
                               return (
                                 <Link
                                   key={child.slug}
@@ -196,18 +201,38 @@ export default function SearchBar() {
           <Link
             to="wishlist"
             aria-label={t("header.wishlist")}
-            className="flex items-center gap-2 rounded bg-gray-100 px-3 py-3 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-200 md:px-4"
+            className="relative flex items-center gap-2 rounded bg-gray-100 px-3 py-3 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-200 md:px-4"
           >
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4">
               <path d="M12 21s-8-5.3-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.7-8 11-8 11Z" />
             </svg>
             <span className="hidden md:inline">{t("header.wishlist")}</span>
+            {wishlistCount > 0 && (
+              <span className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-[#0071E4] px-1 text-[10px] font-bold text-white">
+                {wishlistCount}
+              </span>
+            )}
+          </Link>
+          <Link
+            to="compare"
+            aria-label={t("header.compare")}
+            className="relative flex items-center gap-2 rounded bg-gray-100 px-3 py-3 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-200 md:px-4"
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4">
+              <path d="M4 6h16M6 12h12M9 18h6" />
+            </svg>
+            <span className="hidden md:inline">{t("header.compare")}</span>
+            {compareCount > 0 && (
+              <span className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-gray-800 px-1 text-[10px] font-bold text-white">
+                {compareCount}
+              </span>
+            )}
           </Link>
           <button
             type="button"
             onClick={openCart}
             aria-label={t("header.cart")}
-            className="flex items-center gap-2 rounded bg-gray-100 px-3 py-3 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-200 md:px-4"
+            className="relative flex items-center gap-2 rounded bg-gray-100 px-3 py-3 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-200 md:px-4"
           >
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-4 w-4">
               <path d="M3 4h2l2.5 12h11L21 8H6" />
@@ -215,6 +240,11 @@ export default function SearchBar() {
               <circle cx="17" cy="20" r="1.5" />
             </svg>
             <span className="hidden md:inline">{t("header.cart")}</span>
+            {cartCount > 0 && (
+              <span className="absolute -right-1 -top-1 flex h-4 min-w-4 items-center justify-center rounded-full bg-[#0071E4] px-1 text-[10px] font-bold text-white">
+                {cartCount}
+              </span>
+            )}
           </button>
         </div>
       </div>

@@ -4,7 +4,10 @@ import { useEffect, useState } from "react";
 import { fetchProductBySlug } from "../../api/client";
 import { useProducts } from "../../context/products";
 import { useCart } from "../../context/cart";
+import { useWishlist } from "../../context/wishlist";
+import { useCompare } from "../../context/compare";
 import BuyOneClickModal from "../../components/cart/BuyOneClickModal";
+import WantCheaperModal from "../../components/feedback/WantCheaperModal";
 import type { Product } from "../../data/db";
 
 export default function ProductPage() {
@@ -12,10 +15,12 @@ export default function ProductPage() {
   const { slug } = useParams();
   const { products, loading } = useProducts();
   const { items, addItem, removeItem, updateQuantity } = useCart();
+  const { has: hasInWishlist, toggle: toggleWishlist } = useWishlist();
+  const { has: hasInCompare, toggle: toggleCompare, isFull: compareFull } = useCompare();
   const [fetched, setFetched] = useState<Product | null>(null);
   const [detailLoading, setDetailLoading] = useState(true);
-  const [liked, setLiked] = useState(false);
   const [buyModalOpen, setBuyModalOpen] = useState(false);
+  const [cheaperModalOpen, setCheaperModalOpen] = useState(false);
 
   useEffect(() => {
     if (!slug) return;
@@ -45,6 +50,8 @@ export default function ProductPage() {
 
   const cartItem = items.find((item) => item.product.id === product.id);
   const cartQuantity = cartItem?.quantity ?? 0;
+  const liked = hasInWishlist(product.id);
+  const inCompare = hasInCompare(product.id);
 
   return (
     <div className="container mx-auto px-4 py-6">
@@ -149,7 +156,7 @@ export default function ProductPage() {
             <button
               type="button"
               aria-label={t("header.wishlist")}
-              onClick={() => setLiked((v) => !v)}
+              onClick={() => toggleWishlist(product.id)}
               className={`flex h-12 w-12 items-center justify-center justify-self-center rounded-lg border transition-colors ${
                 liked ? "border-[#0071E4] bg-[#0071E4] text-white" : "border-gray-200 text-gray-500 hover:border-gray-300"
               }`}
@@ -157,6 +164,31 @@ export default function ProductPage() {
               <svg viewBox="0 0 24 24" fill={liked ? "currentColor" : "none"} stroke="currentColor" strokeWidth="2" className="h-5 w-5">
                 <path d="M12 21s-8-5.3-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.7-8 11-8 11Z" />
               </svg>
+            </button>
+            <button
+              type="button"
+              aria-label={t("header.compare")}
+              onClick={() => toggleCompare(product.id)}
+              className={`flex h-12 items-center justify-center gap-2 rounded-lg border px-4 text-sm font-semibold transition-colors ${
+                inCompare
+                  ? "border-[#0071E4] bg-[#0071E4] text-white"
+                  : `border-gray-300 text-gray-700 hover:border-gray-400 ${compareFull ? "opacity-40" : ""}`
+              }`}
+            >
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" className="h-5 w-5">
+                <path d="M4 6h16M6 12h12M9 18h6" />
+              </svg>
+              {t(inCompare ? "pages.compare.inCompare" : "pages.compare.addToCompare")}
+            </button>
+          </div>
+
+          <div className="mt-6">
+            <button
+              type="button"
+              onClick={() => setCheaperModalOpen(true)}
+              className="text-sm font-medium text-[#0071E4] transition-colors hover:text-[#005bb5]"
+            >
+              {t("pages.productCard.wantCheaper")}
             </button>
           </div>
 
@@ -197,6 +229,11 @@ export default function ProductPage() {
         product={product}
         isOpen={buyModalOpen}
         onClose={() => setBuyModalOpen(false)}
+      />
+      <WantCheaperModal
+        product={product}
+        isOpen={cheaperModalOpen}
+        onClose={() => setCheaperModalOpen(false)}
       />
     </div>
   );

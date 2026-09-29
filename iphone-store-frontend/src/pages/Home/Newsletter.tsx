@@ -1,14 +1,30 @@
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 import { useTranslation } from "react-i18next";
 import newsletterImage from "../../assets/img (1).png";
+import { subscribeEmail } from "../../api/feedback";
+
+type Status = "idle" | "loading" | "success" | "error";
 
 export default function Newsletter() {
   const { t } = useTranslation();
   const [email, setEmail] = useState("");
+  const [status, setStatus] = useState<Status>("idle");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    setEmail("");
+    if (!email.trim()) return;
+    if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.trim())) {
+      setStatus("error");
+      return;
+    }
+    setStatus("loading");
+    try {
+      await subscribeEmail(email.trim());
+      setStatus("success");
+      setEmail("");
+    } catch {
+      setStatus("error");
+    }
   };
 
   return (
@@ -30,25 +46,38 @@ export default function Newsletter() {
             <p className="text-2xl font-semibold text-white md:text-3xl">
               {t("pages.newsletter.discount")}
             </p>
-            <form
-              onSubmit={handleSubmit}
-              className="mt-4 flex flex-col gap-2 md:mt-5 md:flex-row md:items-center md:gap-3"
-            >
-              <input
-                type="email"
-                required
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                placeholder={t("pages.newsletter.placeholder")}
-                className="w-full rounded-xl border-0 bg-white px-4 py-3 text-sm outline-none md:text-base"
-              />
-              <button
-                type="submit"
-                className="shrink-0 rounded-xl bg-white px-6 py-3 text-sm font-semibold text-[#0071E4] transition-colors hover:bg-blue-50 md:text-base"
+            {status === "success" ? (
+              <p className="mt-4 rounded-xl bg-white/15 px-4 py-3 text-sm font-medium text-white">
+                {t("pages.newsletter.success")}
+              </p>
+            ) : (
+              <form
+                onSubmit={(e) => void handleSubmit(e)}
+                className="mt-4 flex flex-col gap-2 md:mt-5 md:flex-row md:items-center md:gap-3"
               >
-                {t("pages.newsletter.subscribe")}
-              </button>
-            </form>
+                <input
+                  type="email"
+                  required
+                  value={email}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    if (status === "error") setStatus("idle");
+                  }}
+                  placeholder={t("pages.newsletter.placeholder")}
+                  className="w-full rounded-xl border-0 bg-white px-4 py-3 text-sm outline-none md:text-base"
+                />
+                <button
+                  type="submit"
+                  disabled={status === "loading"}
+                  className="shrink-0 rounded-xl bg-white px-6 py-3 text-sm font-semibold text-[#0071E4] transition-colors hover:bg-blue-50 disabled:opacity-60 md:text-base"
+                >
+                  {status === "loading" ? t("common.loading") : t("pages.newsletter.subscribe")}
+                </button>
+              </form>
+            )}
+            {status === "error" && (
+              <p className="mt-3 text-xs font-medium text-white/90">{t("pages.newsletter.error")}</p>
+            )}
           </div>
         </div>
       </div>

@@ -1,9 +1,40 @@
 import type { Product } from "../data/db";
 import iphoneImage from "../assets/iphone.png";
+import macbookImage from "../assets/macbook.jpeg";
+import ipadImage from "../assets/ipad.jpg";
+import airpodsImage from "../assets/airpods.webp";
+import appleWatchImage from "../assets/applewatch.webp";
 
 export const API_BASE = "/api";
 
 export const PRODUCT_IMAGE_FALLBACK = iphoneImage;
+
+const CATEGORY_IMAGE_PREFIXES: Array<[string, string]> = [
+  ["iphone", iphoneImage],
+  ["macbook", macbookImage],
+  ["ipad", ipadImage],
+  ["airpods", airpodsImage],
+  ["apple-watch", appleWatchImage],
+];
+
+const CATEGORY_IMAGE_BY_SLUG: Record<string, string> = {
+  headphones: airpodsImage,
+  imac: macbookImage,
+};
+
+export function categoryImage(slug: string): string | null {
+  const explicit = CATEGORY_IMAGE_BY_SLUG[slug];
+  if (explicit) return explicit;
+  const match = CATEGORY_IMAGE_PREFIXES.find(([prefix]) =>
+    slug.startsWith(prefix)
+  );
+  return match ? match[1] : null;
+}
+
+function imageFor(a: ApiProduct): string {
+  if (a.image) return a.image;
+  return categoryImage(a.category_slug) ?? iphoneImage;
+}
 
 export interface ApiListResponse<T> {
   count: number;
@@ -127,7 +158,7 @@ export function toProduct(a: ApiProduct): Product {
     color: a.color,
     storage: a.storage ?? undefined,
     condition: a.condition,
-    image: a.image ?? iphoneImage,
+    image: imageFor(a),
     description: a.description,
   };
 }

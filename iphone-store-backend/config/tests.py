@@ -138,6 +138,163 @@ class MeApiTests(APITestCase):
         self.assertEqual(self.client.get(reverse("me")).status_code, 401)
 
 
+class ProfileUpdateApiTests(APITestCase):
+    def setUp(self):
+        get_user_model().objects.create_user(
+            "buyer", password="buyer-pass-123", email="buyer@example.com"
+        )
+        self.access = self.client.post(
+            reverse("token_obtain_pair"),
+            {"username": "buyer", "password": "buyer-pass-123"},
+            content_type="application/json",
+        ).data["access"]
+        self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {self.access}")
+
+    def auth_headers(self):
+        return {"HTTP_AUTHORIZATION": f"Bearer {self.access}"}
+
+    def test_patch_updates_fields(self):
+        response = self.client.patch(
+            reverse("me"),
+            {"first_name": "Иван", "last_name": "Петров", "email": "new@example.com"},
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 200)
+        user = get_user_model().objects.get(username="buyer")
+        self.assertEqual(user.first_name, "Иван")
+        self.assertEqual(user.last_name, "Петров")
+        self.assertEqual(user.email, "new@example.com")
+        self.assertEqual(response.data["first_name"], "Иван")
+
+    def test_empty_email_allowed(self):
+        response = self.client.patch(
+            reverse("me"), {"email": ""}, content_type="application/json"
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertEqual(get_user_model().objects.get(username="buyer").email, "")
+
+    def test_duplicate_email_rejected(self):
+        get_user_model().objects.create_user("other", password="x", email="taken@example.com")
+        response = self.client.patch(
+            reverse("me"),
+            {"email": "taken@example.com"},
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 400)
+        self.assertIn("email", response.data)
+
+    def test_duplicate_username_rejected(self):
+        get_user_model().objects.create_user("ivan", password="x")
+        response = self.client.patch(
+            reverse("me"), {"username": "ivan"}, content_type="application/json"
+        )
+        self.assertEqual(response.status_code, 400)
+        self.assertIn("username", response.data)
+
+    def test_own_username_is_allowed(self):
+        response = self.client.patch(
+            reverse("me"), {"username": "buyer"}, content_type="application/json"
+        )
+        self.assertEqual(response.status_code, 200)
+
+    def test_cannot_change_password_via_me(self):
+        response = self.client.patch(
+            reverse("me"), {"password": "hacked"}, content_type="application/json"
+        )
+        self.assertEqual(response.status_code, 200)
+        self.assertTrue(get_user_model().objects.get(username="buyer").check_password("buyer-pass-123"))
+
+    def test_requires_token(self):
+        self.client.credentials()
+        response = self.client.patch(
+            reverse("me"), {"first_name": "X"}, content_type="application/json"
+        )
+        self.assertEqual(response.status_code, 401)
+
+
+class ChangePasswordApiTests(APITestCase):
+    def setUp(self):
+        get_user_model().objects.create_user("buyer", password="buyer-pass-123")
+        self.access = self.client.post(
+            reverse("token_obtain_pair"),
+            {"username": "buyer", "password": "buyer-pass-123"},
+            content_type="application/json",
+        ).data["access"]
+        self.client.credentials(HTTP_AUTHORIZATION=f"Bearer {self.access}")
+
+    def test_changes_password(self):
+        response = self.client.post(
+            reverse("change_password"),
+            {
+                "old_password": "buyer-pass-123",
+                "new_password": "Novyy-Parol-2026",
+                "new_password_confirm": "Novyy-Parol-2026",
+            },
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 204)
+        self.assertTrue(
+            get_user_model()
+            .objects.get(username="buyer")
+            .check_password("Novyy-Parol-2026")
+        )
+
+    def test_old_password_required(self):
+        response = self.client.post(
+            reverse("change_password"),
+            {
+                "old_password": "wrong",
+                "new_password": "Novyy-Parol-2026",
+                "new_password_confirm": "Novyy-Parol-2026",
+            },
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 400)
+        self.assertIn("old_password", response.data)
+
+    def test_passwords_must_match(self):
+        response = self.client.post(
+            reverse("change_password"),
+            {
+                "old_password": "buyer-pass-123",
+                "new_password": "Novyy-Parol-2026",
+                "new_password_confirm": "Drugoy-Parol-2026",
+            },
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 400)
+        self.assertIn("new_password_confirm", response.data)
+
+    def test_weak_password_rejected(self):
+        response = self.client.post(
+            reverse("change_password"),
+            {
+                "old_password": "buyer-pass-123",
+                "new_password": "12345",
+                "new_password_confirm": "12345",
+            },
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 400)
+        self.assertIn("new_password", response.data)
+        self.assertTrue(
+            get_user_model().objects.get(username="buyer").check_password("buyer-pass-123")
+        )
+
+    def test_requires_token(self):
+        self.client.credentials()
+        response = self.client.post(
+            reverse("change_password"),
+            {
+                "old_password": "buyer-pass-123",
+                "new_password": "Novyy-Parol-2026",
+                "new_password_confirm": "Novyy-Parol-2026",
+            },
+            content_type="application/json",
+        )
+        self.assertEqual(response.status_code, 401)
+
+
 class AuthApiTests(TestCase):
     def setUp(self):
         self.category = Category.objects.create(name="iPhone")

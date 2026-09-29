@@ -40,6 +40,7 @@ export default function CartProvider({ children }: { children: ReactNode }) {
   const { accessToken } = useAuth();
   const [lines, setLines] = useState<Line[]>([]);
   const [isOpen, setIsOpen] = useState(false);
+  const [checkoutOpen, setCheckoutOpen] = useState(false);
 
   const loadCart = useCallback(async () => {
     try {
@@ -87,6 +88,12 @@ export default function CartProvider({ children }: { children: ReactNode }) {
 
   const openCart = useCallback(() => setIsOpen(true), []);
   const closeCart = useCallback(() => setIsOpen(false), []);
+
+  const openCheckout = useCallback(() => {
+    setCheckoutOpen(true);
+    setIsOpen(false);
+  }, []);
+  const closeCheckout = useCallback(() => setCheckoutOpen(false), []);
 
   const addItem = useCallback(
     async (product: Product, quantity = 1) => {
@@ -187,14 +194,17 @@ export default function CartProvider({ children }: { children: ReactNode }) {
       isOpen,
       count,
       total,
+      checkoutOpen,
       openCart,
       closeCart,
+      openCheckout,
+      closeCheckout,
       addItem,
       removeItem,
       clear,
       updateQuantity,
     };
-  }, [items, isOpen, openCart, closeCart, addItem, removeItem, clear, updateQuantity]);
+  }, [items, isOpen, checkoutOpen, openCart, closeCart, openCheckout, closeCheckout, addItem, removeItem, clear, updateQuantity]);
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;
 }

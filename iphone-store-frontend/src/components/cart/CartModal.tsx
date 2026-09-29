@@ -1,17 +1,14 @@
-import { useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate, useParams } from "react-router-dom";
 import { useCart } from "../../context/cart";
 import { useAuth } from "../../context/auth";
-import CheckoutModal from "./CheckoutModal";
 
 export default function CartModal() {
   const { t } = useTranslation();
   const { lang } = useParams();
   const navigate = useNavigate();
-  const { items, isOpen, closeCart, removeItem, clear, total, count } = useCart();
+  const { items, isOpen, closeCart, removeItem, clear, total, count, openCheckout } = useCart();
   const { isAuthenticated } = useAuth();
-  const [checkoutOpen, setCheckoutOpen] = useState(false);
 
   if (!isOpen) return null;
 
@@ -26,7 +23,7 @@ export default function CartModal() {
       navigate(`/${lang}/login`);
       return;
     }
-    setCheckoutOpen(true);
+    openCheckout();
   };
 
   return (
@@ -134,7 +131,6 @@ export default function CartModal() {
           </div>
         )}
       </div>
-      <CheckoutModal isOpen={checkoutOpen} onClose={() => setCheckoutOpen(false)} />
     </div>
   );
 }

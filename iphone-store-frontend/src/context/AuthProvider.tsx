@@ -7,7 +7,10 @@ import {
   login as apiLogin,
   register as apiRegister,
   setTokens,
+  updateProfile as apiUpdateProfile,
+  changePassword as apiChangePassword,
   type AuthUser,
+  type ProfileData,
 } from "../api/auth";
 import { AuthContext, type AuthContextValue } from "./auth";
 
@@ -89,6 +92,24 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
     setUser(null);
   }, []);
 
+  const updateProfile = useCallback(
+    async (data: ProfileData) => {
+      const updated = await apiUpdateProfile(data);
+      setUser(updated);
+      setUsername(updated.username);
+      localStorage.setItem(USERNAME_KEY, updated.username);
+      return updated;
+    },
+    []
+  );
+
+  const changePassword = useCallback(
+    async (oldPassword: string, newPassword: string, newPasswordConfirm: string) => {
+      await apiChangePassword(oldPassword, newPassword, newPasswordConfirm);
+    },
+    []
+  );
+
   const value = useMemo<AuthContextValue>(
     () => ({
       isAuthenticated: accessToken !== null,
@@ -99,8 +120,10 @@ export default function AuthProvider({ children }: { children: ReactNode }) {
       register,
       logout,
       refreshProfile,
+      updateProfile,
+      changePassword,
     }),
-    [accessToken, username, user, login, register, logout, refreshProfile]
+    [accessToken, username, user, login, register, logout, refreshProfile, updateProfile, changePassword]
   );
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;

@@ -4,7 +4,10 @@ import { Link, useParams } from "react-router-dom";
 import type { Product } from "../../data/db";
 import { useCart } from "../../context/cart";
 import { useRecentlyViewed } from "../../context/recentlyViewed";
+import { useWishlist } from "../../context/wishlist";
+import { useCompare } from "../../context/compare";
 import BuyOneClickModal from "../../components/cart/BuyOneClickModal";
+import WantCheaperModal from "../../components/feedback/WantCheaperModal";
 
 export type { Product };
 
@@ -17,11 +20,16 @@ export default function ProductCard({ product }: ProductCardProps) {
   const { lang } = useParams();
   const { items, addItem, removeItem, updateQuantity } = useCart();
   const { track } = useRecentlyViewed();
+  const { has: hasInWishlist, toggle: toggleWishlist } = useWishlist();
+  const { has: hasInCompare, toggle: toggleCompare, isFull: compareFull } = useCompare();
   const [rating, setRating] = useState(0);
   const [hovered, setHovered] = useState(0);
-  const [liked, setLiked] = useState(false);
   const [copied, setCopied] = useState(false);
   const [buyModalOpen, setBuyModalOpen] = useState(false);
+  const [cheaperModalOpen, setCheaperModalOpen] = useState(false);
+
+  const liked = hasInWishlist(product.id);
+  const inCompare = hasInCompare(product.id);
 
   useEffect(() => {
     track(product);
@@ -80,8 +88,8 @@ export default function ProductCard({ product }: ProductCardProps) {
         <div className="flex items-center gap-1">
           <button
             type="button"
-            aria-label="Like"
-            onClick={() => setLiked((prev) => !prev)}
+            aria-label={t("header.wishlist")}
+            onClick={() => toggleWishlist(product.id)}
             className="flex h-8 w-8 items-center justify-center rounded-full text-gray-400 transition-colors hover:bg-gray-100 hover:text-red-500"
           >
             <svg
@@ -92,6 +100,21 @@ export default function ProductCard({ product }: ProductCardProps) {
               className="h-5 w-5"
             >
               <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
+            </svg>
+          </button>
+          <button
+            type="button"
+            aria-label={t("header.compare")}
+            title={inCompare ? undefined : (compareFull ? t("pages.compare.limitReached") : t("header.compare"))}
+            onClick={() => toggleCompare(product.id)}
+            className={`flex h-8 w-8 items-center justify-center rounded-full transition-colors ${
+              inCompare
+                ? "bg-[#0071E4] text-white"
+                : "text-gray-400 hover:bg-gray-100 hover:text-[#0071E4]"
+            } ${compareFull && !inCompare ? "opacity-40" : ""}`}
+          >
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-5 w-5">
+              <path d="M4 6h16M6 12h12M9 18h6" />
             </svg>
           </button>
           <button
@@ -211,9 +234,26 @@ export default function ProductCard({ product }: ProductCardProps) {
       <div className="mt-3 flex flex-wrap items-center justify-between gap-2 text-sm">
         <button
           type="button"
+          onClick={() => setCheaperModalOpen(true)}
           className="text-gray-600 transition-colors hover:text-[#0071E4]"
         >
           {t("pages.productCard.wantCheaper")}
+        </button>
+        <button
+          type="button"
+          aria-pressed={inCompare}
+          disabled={compareFull && !inCompare}
+          onClick={() => toggleCompare(product.id)}
+          className={`flex items-center gap-1 font-medium transition-colors ${
+            inCompare
+              ? "text-[#0071E4]"
+              : "text-gray-600 hover:text-[#0071E4]"
+          } ${compareFull && !inCompare ? "opacity-40" : ""}`}
+        >
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" className="h-4 w-4">
+            <path d="M4 6h16M6 12h12M9 18h6" />
+          </svg>
+          {t(inCompare ? "pages.compare.inCompare" : "pages.compare.addToCompare")}
         </button>
         <button
           type="button"
@@ -228,6 +268,11 @@ export default function ProductCard({ product }: ProductCardProps) {
         product={product}
         isOpen={buyModalOpen}
         onClose={() => setBuyModalOpen(false)}
+      />
+      <WantCheaperModal
+        product={product}
+        isOpen={cheaperModalOpen}
+        onClose={() => setCheaperModalOpen(false)}
       />
     </article>
   );

@@ -11,10 +11,21 @@ class OrderItemSerializer(serializers.ModelSerializer):
     total_price = serializers.DecimalField(
         max_digits=12, decimal_places=2, read_only=True
     )
+    product_slug = serializers.CharField(
+        source="product.slug", read_only=True, allow_null=True
+    )
 
     class Meta:
         model = OrderItem
-        fields = ("id", "product", "name", "price", "quantity", "total_price")
+        fields = (
+            "id",
+            "product",
+            "product_slug",
+            "name",
+            "price",
+            "quantity",
+            "total_price",
+        )
         read_only_fields = ("id", "name", "price")
 
 
